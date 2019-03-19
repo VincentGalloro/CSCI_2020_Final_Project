@@ -26,28 +26,17 @@ public class HomePage extends Application{
     
     public void start(Stage primaryStage){
         BorderPane mainPane = new BorderPane();
-       
-        //Pane for task info
-        GridPane pane = new GridPane();
-        pane.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
-     
-        Button okButton = new Button("Add a new Task");
-        okButton.setOnMousePressed(e -> {
+        
+        //Pane that holds the pane for buttons
+        BorderPane holdButtonsPane = new BorderPane();
+        ImageView settingsButton = new ImageView(new Image("file:///C:/Users/Aabid Mitha/OneDrive/CSCI_2020_Final_Project/CSCI_2020_Final_Project/Images/settingsButton.png"));
+        ImageView addTaskButton = new ImageView(new Image("file:///C:/Users/Aabid Mitha/OneDrive/CSCI_2020_Final_Project/CSCI_2020_Final_Project/Images/addTaskButton.png"));
+        
+        addTaskButton.setOnMousePressed(e -> {
             CreateTaskPage tap = new CreateTaskPage();  
             Stage stage = new Stage();
             tap.start(stage);
         });
-        
-        pane.add(new Label("home page: "), 0, 0);
-        pane.add(nameField, 1, 0);
-        pane.add(new Label("home page: "), 0, 1);
-        pane.add(notesField, 1, 1);
-        pane.add(okButton, 1, 2);
-        
-        //Pane that holds the pane for buttons
-        BorderPane holdButtonsPane = new BorderPane();
-        ImageView settingsButton = new ImageView(new Image("file:///Images/settingsButton.png"));
-        ImageView addTaskButton = new ImageView(new Image("file:////Images/addTaskButton.png"));
         
         //Pane that has the settings and add new task buttons
         GridPane buttonsPane = new GridPane(); 
@@ -58,7 +47,6 @@ public class HomePage extends Application{
         holdButtonsPane.setRight(buttonsPane);
         
         //Add GridPanes to BorderPane
-        mainPane.setRight(pane);
         mainPane.setBottom(holdButtonsPane);
         
         Scene scene = new Scene(mainPane, 500, 500);
