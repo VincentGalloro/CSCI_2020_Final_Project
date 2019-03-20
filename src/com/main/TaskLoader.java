@@ -32,7 +32,7 @@ public class TaskLoader {
         return ts;
     }
     
-    public TaskDisplay createDisplay(){
-        return new TaskDisplay(getTasks());
+    public GenerateTaskDisplay createDisplay(){
+        return new GenerateTaskDisplay(getTasks());
     }
 }
