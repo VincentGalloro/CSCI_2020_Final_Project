@@ -1,3 +1,4 @@
+package com.main;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -24,7 +25,7 @@ public class DisplayTask extends Application {
 
         //TODO  method to get task name and due date
 
-        //Flow pane to display Task name and due date
+        //Horizontal Pane to display Task name and due date
         HBox hb1 = new HBox();
         hb1.prefWidthProperty().bind(root.widthProperty());
         hb1.setStyle("-fx-border-color: #000000;-fx-border-radius: 5");
@@ -40,8 +41,9 @@ public class DisplayTask extends Application {
         hb1.getChildren().addAll(lTaskName,lDue, lDueDate);
 
         //TODO  method to find due time
-        //TODO change this to text instead of label
-        Label lDueIn = new Label("this task is due in _ days");
+
+        Label lDueIn = new Label("This task is due in _ days");
+        lDueIn.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, FontPosture.ITALIC, 16));
 
         Label lNotes = new Label("Notes");
         lNotes.setStyle("-fx-border-color: black;");
