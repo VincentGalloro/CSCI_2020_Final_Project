@@ -21,13 +21,14 @@ public class HomePage extends Application{
     private TaskPool taskPool;
     private TaskLoader taskLoader;
     
+    BorderPane mainPane = new BorderPane();
+
     public HomePage(){
         taskPool = new TaskPool();
         taskLoader = new TaskLoader(taskPool);
     }
     
     public void start(Stage primaryStage){
-        BorderPane mainPane = new BorderPane();
         
         //Pane that holds the pane for buttons
         BorderPane holdButtonsPane = new BorderPane();
@@ -53,16 +54,22 @@ public class HomePage extends Application{
         ArrayList<Task> tasks = taskGenerator.generateTaskArray(5);
 
         //Task Display
-        GenerateTaskDisplay taskDisplay = new GenerateTaskDisplay(tasks);
-        
+        //GenerateTaskDisplay taskDisplay = new GenerateTaskDisplay(tasks);
+        for(Task task : tasks){
+            taskPool.addTask(task);
+        }
         
         //Add GridPanes to BorderPane
         mainPane.setBottom(holdButtonsPane);
-        mainPane.setRight(taskDisplay.generateDisplay());
                 
         Scene scene = new Scene(mainPane, 500, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public void refresh(){
+       GenerateTaskDisplay gtd = taskLoader.createDisplay();
+       mainPane.setRight(gtd.generateDisplay());
     }
     
     public static void main(String[] args){
