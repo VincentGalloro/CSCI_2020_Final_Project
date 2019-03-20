@@ -2,10 +2,10 @@
 package com.main;
 
 import java.util.ArrayList;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class GenerateTaskDisplay {
     
@@ -32,6 +32,11 @@ public class GenerateTaskDisplay {
         //again, you can change pane if you have a better type in mind
         GridPane taskPane = new GridPane();
         Button btTaskName = new Button("Task Name: " + t.getName());
+        btTaskName.setOnMousePressed(e -> {
+            DisplayTaskPage dtp = new DisplayTaskPage(t);  
+            Stage stage = new Stage();
+            dtp.start(stage);
+        });
         btTaskName.widthProperty();
         Button btDueDate = new Button("Due Date: " + t.getDueDate());
         taskPane.add(btTaskName, 0, 0);
