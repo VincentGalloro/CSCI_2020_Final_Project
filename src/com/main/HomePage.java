@@ -20,12 +20,12 @@ public class HomePage extends Application{
     
     private TaskPool taskPool;
     private TaskLoader taskLoader;
-    
-    BorderPane mainPane = new BorderPane();
+    private BorderPane mainPane;
 
     public HomePage(){
         taskPool = new TaskPool();
         taskLoader = new TaskLoader(taskPool);
+        mainPane = new BorderPane();
     }
     
     public void start(Stage primaryStage){
@@ -36,7 +36,7 @@ public class HomePage extends Application{
         ImageView addTaskButton = new ImageView(new Image("file:images/addTaskButton.png"));
         
         addTaskButton.setOnMousePressed(e -> {
-            CreateTaskPage tap = new CreateTaskPage(taskPool);  
+            CreateTaskPage tap = new CreateTaskPage(taskPool, new Refresher());  
             Stage stage = new Stage();
             tap.start(stage);
         });
@@ -59,6 +59,8 @@ public class HomePage extends Application{
             taskPool.addTask(task);
         }
         
+        new Refresher().refresh();
+        
         //Add GridPanes to BorderPane
         mainPane.setBottom(holdButtonsPane);
                 
@@ -67,9 +69,11 @@ public class HomePage extends Application{
         primaryStage.show();
     }
 
-    public void refresh(){
-       GenerateTaskDisplay gtd = taskLoader.createDisplay();
-       mainPane.setRight(gtd.generateDisplay());
+    public class Refresher{
+        public void refresh(){
+            GenerateTaskDisplay gtd = taskLoader.createDisplay();
+            mainPane.setRight(gtd.generateDisplay());
+        }
     }
     
     public static void main(String[] args){
