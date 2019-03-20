@@ -31,7 +31,8 @@ public class DisplayTask extends Application {
         hb1.setStyle("-fx-border-color: #000000;-fx-border-radius: 5");
         Label lTaskName = new Label("This is the name of the task");
         lTaskName.prefWidthProperty().bind(root.widthProperty().multiply(0.6));
-
+        
+        //TODO make the text bold
         Label lDue = new Label("DUE: ");
         lDue.setAlignment(Pos.CENTER_RIGHT);
         lDue.prefWidthProperty().bind(root.widthProperty().multiply(0.15));
@@ -43,8 +44,9 @@ public class DisplayTask extends Application {
         //TODO  method to find due time
 
         Label lDueIn = new Label("This task is due in _ days");
-        lDueIn.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, FontPosture.ITALIC, 16));
-
+        lDueIn.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, FontPosture.ITALIC, 15));
+        
+        //TODO make the text bold
         Label lNotes = new Label("Notes");
         lNotes.setStyle("-fx-border-color: black;");
         lNotes.setPadding(new Insets(2,2,2,2));
