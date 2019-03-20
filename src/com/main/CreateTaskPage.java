@@ -2,7 +2,6 @@
 package com.main;
 
 import com.main.HomePage.Refresher;
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class CreateTaskPage extends Application{
+public class CreateTaskPage{
     
     private final TaskPool taskPool;
     private TextField nameField, notesField;

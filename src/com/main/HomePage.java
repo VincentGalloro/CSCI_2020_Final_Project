@@ -20,6 +20,7 @@ public class HomePage extends Application{
 
     public HomePage(){
         taskPool = new TaskPool();
+        taskPool.load();
         taskLoader = new TaskLoader(taskPool);
         mainPane = new BorderPane();
     }
@@ -46,14 +47,14 @@ public class HomePage extends Application{
         holdButtonsPane.setRight(buttonsPane);
         
         //RNG
-        RandomTaskGenerator taskGenerator = new RandomTaskGenerator();
-        ArrayList<Task> tasks = taskGenerator.generateTaskArray(5);
+        //RandomTaskGenerator taskGenerator = new RandomTaskGenerator();
+        //ArrayList<Task> tasks = taskGenerator.generateTaskArray(5);
 
         //Task Display
         //GenerateTaskDisplay taskDisplay = new GenerateTaskDisplay(tasks);
-        for(Task task : tasks){
-            taskPool.addTask(task);
-        }
+        //for(Task task : tasks){
+            //taskPool.addTask(task);
+        //}
         
         new Refresher().refresh();
         
@@ -70,6 +71,10 @@ public class HomePage extends Application{
             GenerateTaskDisplay gtd = taskLoader.createDisplay();
             mainPane.setRight(gtd.generateDisplay());
         }
+    }
+    
+    public void stop(){
+        taskPool.save();
     }
     
     public static void main(String[] args){

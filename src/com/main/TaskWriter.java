@@ -24,7 +24,11 @@ public class TaskWriter {
     }
     private void write(String s){ write(s.getBytes()); }
     private void write(long l){ write(""+l); }
-    private void write(boolean b){ write(new byte[]{(byte)(b ? 0 : 1)}); }
+    private void write(boolean b){ 
+        try { 
+            out.write(new byte[]{(byte)(b ? 0 : 1)});
+        } catch (IOException ex) {}
+    }
     
     public void write(Task t){
         write(t.getName());
@@ -32,5 +36,13 @@ public class TaskWriter {
         write(t.getDueDate().getTime());
         write(t.isCompleted());
         write(t.getPriority().ordinal());
+    }
+    
+    public void flush(){ 
+        try {
+            out.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(TaskWriter.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
