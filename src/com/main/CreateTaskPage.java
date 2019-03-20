@@ -12,11 +12,26 @@ import javafx.stage.Stage;
 
 public class CreateTaskPage extends Application{
     
+    private final TaskPool taskPool;
     private TextField nameField, notesField;
     
-    public CreateTaskPage(){
+    public CreateTaskPage(TaskPool taskPool){
+        this.taskPool = taskPool;
         nameField = new TextField();
         notesField = new TextField();
+        
+        /*
+        RandomTaskGenerator rtg = new RandomTaskGenerator();
+        for(int i = 0; i < 20; i++){
+            Task t = rtg.generateSingleTask();
+            System.out.println(t);
+            taskPool.addTask(t);
+        }
+        TaskLoader tl = new TaskLoader(taskPool);
+        tl.addFilter(new PriorityFilter(TaskPriority.HIGH));
+        TaskDisplay td = tl.createDisplay();
+        System.out.println();
+        td.printTasks();*/
     }
     
     public void start(Stage stage){
@@ -25,7 +40,7 @@ public class CreateTaskPage extends Application{
         Button okButton = new Button("Create Task");
         okButton.setOnMousePressed(e -> {
             Task t = createTask();
-            System.out.println(t.toString());
+            taskPool.addTask(t);
         });
         
         pane.add(new Label("Task name: "), 0, 0);
