@@ -13,15 +13,17 @@ import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import java.util.ArrayList;
 
 
 public class HomePage extends Application{
     
-    private TextField nameField, notesField;
+    private TaskPool taskPool;
+    private TaskLoader taskLoader;
     
     public HomePage(){
-        nameField = new TextField();
-        notesField = new TextField();
+        taskPool = new TaskPool();
+        taskLoader = new TaskLoader(taskPool);
     }
     
     public void start(Stage primaryStage){
@@ -29,11 +31,11 @@ public class HomePage extends Application{
         
         //Pane that holds the pane for buttons
         BorderPane holdButtonsPane = new BorderPane();
-        ImageView settingsButton = new ImageView(new Image("file:///C:/Users/Aabid Mitha/OneDrive/CSCI_2020_Final_Project/CSCI_2020_Final_Project/Images/settingsButton.png"));
-        ImageView addTaskButton = new ImageView(new Image("file:///C:/Users/Aabid Mitha/OneDrive/CSCI_2020_Final_Project/CSCI_2020_Final_Project/Images/addTaskButton.png"));
+        ImageView settingsButton = new ImageView(new Image("file:images/settingsButton.png"));
+        ImageView addTaskButton = new ImageView(new Image("file:images/addTaskButton.png"));
         
         addTaskButton.setOnMousePressed(e -> {
-            CreateTaskPage tap = new CreateTaskPage();  
+            CreateTaskPage tap = new CreateTaskPage(taskPool);  
             Stage stage = new Stage();
             tap.start(stage);
         });
@@ -46,9 +48,18 @@ public class HomePage extends Application{
         buttonsPane.add(addTaskButton, 1, 0);
         holdButtonsPane.setRight(buttonsPane);
         
+        //RNG
+        RandomTaskGenerator taskGenerator = new RandomTaskGenerator();
+        ArrayList<Task> tasks = taskGenerator.generateTaskArray(5);
+
+        //Task Display
+        GenerateTaskDisplay taskDisplay = new GenerateTaskDisplay(tasks);
+        
+        
         //Add GridPanes to BorderPane
         mainPane.setBottom(holdButtonsPane);
-        
+        mainPane.setRight(taskDisplay.generateDisplay());
+                
         Scene scene = new Scene(mainPane, 500, 500);
         primaryStage.setScene(scene);
         primaryStage.show();

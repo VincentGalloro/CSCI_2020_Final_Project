@@ -12,7 +12,7 @@ public class RandomTaskGenerator {
     //HOW TO USE THIS CLASS
     //
     //Create the generator object
-    //1) RandomTaskGenerator taskGenerator = new RandomTaskGenerator();
+    //RandomTaskGenerator taskGenerator = new RandomTaskGenerator();
     //
     //2) taskGenerator.generateSingleTask();
     //for creating a single task
@@ -36,7 +36,7 @@ public class RandomTaskGenerator {
     }
     
     public Task generateSingleTask(){
-        Task t = new Task(genRandomString(10, 40, true));
+        Task t = new Task(genRandomString(10, 11, true));
         Date dueDate = new Date();
         dueDate.setTime(System.currentTimeMillis() + random.nextInt(864000000)); //up to ten days in future
         t.setDueDate(dueDate);
