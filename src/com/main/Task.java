@@ -17,6 +17,7 @@ public class Task {
     
     public Task(String name){
         this.name = name;
+        this.notes = "";
         this.priority = TaskPriority.LOW;
         this.dueDate = new Date();
     }
