@@ -22,19 +22,6 @@ public class CreateTaskPage{
         this.refresher = refresher;
         nameField = new TextField();
         notesField = new TextField();
-        
-        /*
-        RandomTaskGenerator rtg = new RandomTaskGenerator();
-        for(int i = 0; i < 20; i++){
-            Task t = rtg.generateSingleTask();
-            System.out.println(t);
-            taskPool.addTask(t);
-        }
-        TaskLoader tl = new TaskLoader(taskPool);
-        tl.addFilter(new PriorityFilter(TaskPriority.HIGH));
-        TaskDisplay td = tl.createDisplay();
-        System.out.println();
-        td.printTasks();*/
     }
     
     public void start(Stage stage){

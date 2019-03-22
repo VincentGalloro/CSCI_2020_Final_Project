@@ -15,8 +15,11 @@ public class SingleTaskPage extends Application {
 
     private Task t;
     private Date todaysDate  = new Date();
-    public SingleTaskPage(Task task){
+    private Runnable refresher;
+    
+    public SingleTaskPage(Task task, Runnable refresher){
         t = task;
+        this.refresher = refresher;
     }
 
     @Override
@@ -62,8 +65,7 @@ public class SingleTaskPage extends Application {
         lDisplayNotes.setAlignment(Pos.TOP_LEFT);
         lDisplayNotes.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245)");
 
-
-
+        //refresher.run();
 
         root.getChildren().addAll(hb1, lDueIn, lNotes, lDisplayNotes);
 

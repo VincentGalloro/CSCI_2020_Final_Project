@@ -69,7 +69,7 @@ public class HomePage extends Application{
     }
 
     public void refresh(){
-        TaskPaneGenerator tpg = new TaskPaneGenerator(taskPoolQuery.getTasks());
+        TaskPaneGenerator tpg = new TaskPaneGenerator(taskPoolQuery.getTasks(), this::refresh);
         mainPane.setRight(tpg.generateTaskPane());
     }
     

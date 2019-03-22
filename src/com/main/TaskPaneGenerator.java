@@ -11,9 +11,11 @@ import javafx.stage.Stage;
 public class TaskPaneGenerator {
     
     private ArrayList<Task> tasks;
+    private Runnable refresher;
     
-    public TaskPaneGenerator(ArrayList<Task> tasks){
+    public TaskPaneGenerator(ArrayList<Task> tasks, Runnable refresher){
         this.tasks = tasks;
+        this.refresher = refresher;
     }
     
     public VBox generateTaskPane(){
@@ -34,7 +36,7 @@ public class TaskPaneGenerator {
         GridPane taskPane = new GridPane();
         Button btTaskName = new Button("Task Name: " + t.getName());
         btTaskName.setOnMousePressed(e -> {
-            SingleTaskPage dtp = new SingleTaskPage(t);  
+            SingleTaskPage dtp = new SingleTaskPage(t, refresher);  
             Stage stage = new Stage();
             dtp.start(stage);
         });
