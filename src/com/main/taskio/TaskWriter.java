@@ -1,5 +1,6 @@
-package com.main;
+package com.main.taskio;
 
+import com.main.Task;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Level;

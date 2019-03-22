@@ -1,6 +1,9 @@
 
-package com.main;
+package com.main.pages;
 
+import com.main.GenerateTaskDisplay;
+import com.main.TaskLoader;
+import com.main.TaskPool;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;

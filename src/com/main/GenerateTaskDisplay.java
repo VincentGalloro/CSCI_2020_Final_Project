@@ -1,6 +1,7 @@
 
 package com.main;
 
+import com.main.pages.DisplayTaskPage;
 import java.util.ArrayList;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;

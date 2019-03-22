@@ -1,5 +1,8 @@
 
-package com.main;
+package com.main.filters;
+
+import com.main.Task;
+import com.main.TaskPriority;
 
 public class PriorityFilter implements Filter{
 

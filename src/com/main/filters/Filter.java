@@ -1,5 +1,7 @@
 
-package com.main;
+package com.main.filters;
+
+import com.main.Task;
 
 public interface Filter {
     

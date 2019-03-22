@@ -1,4 +1,5 @@
-package com.main;
+package com.main.pages;
+import com.main.Task;
 import java.util.Date;
 import javafx.application.Application;
 import javafx.geometry.Insets;

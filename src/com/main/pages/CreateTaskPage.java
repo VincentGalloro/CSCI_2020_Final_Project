@@ -1,7 +1,9 @@
 
-package com.main;
+package com.main.pages;
 
-import com.main.HomePage.Refresher;
+import com.main.pages.HomePage.Refresher;
+import com.main.Task;
+import com.main.TaskPool;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

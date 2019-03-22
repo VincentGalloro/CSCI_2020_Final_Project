@@ -1,6 +1,8 @@
 
-package com.main;
+package com.main.taskio;
 
+import com.main.Task;
+import com.main.TaskPriority;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
