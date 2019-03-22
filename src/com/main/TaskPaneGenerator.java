@@ -1,40 +1,40 @@
 
 package com.main;
 
-import com.main.pages.DisplayTaskPage;
+import com.main.pages.SingleTaskPage;
 import java.util.ArrayList;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class GenerateTaskDisplay {
+public class TaskPaneGenerator {
     
     private ArrayList<Task> tasks;
     
-    public GenerateTaskDisplay(ArrayList<Task> tasks){
+    public TaskPaneGenerator(ArrayList<Task> tasks){
         this.tasks = tasks;
     }
     
-    public VBox generateDisplay(){
+    public VBox generateTaskPane(){
         //aabid implement this function!!
         //you can change pane to a more relevant type if you want
         VBox vBox = new VBox();
         //you can modify the follow too:
         for(Task t : tasks){
-            vBox.getChildren().add(generateSingleTaskDisplay(t));
+            vBox.getChildren().add(generateSingleTaskPane(t));
         }
         
         return vBox; //also change this line
     }
     
-    public GridPane generateSingleTaskDisplay(Task t){
+    public GridPane generateSingleTaskPane(Task t){
         //aabid implement this function!!
         //again, you can change pane if you have a better type in mind
         GridPane taskPane = new GridPane();
         Button btTaskName = new Button("Task Name: " + t.getName());
         btTaskName.setOnMousePressed(e -> {
-            DisplayTaskPage dtp = new DisplayTaskPage(t);  
+            SingleTaskPage dtp = new SingleTaskPage(t);  
             Stage stage = new Stage();
             dtp.start(stage);
         });

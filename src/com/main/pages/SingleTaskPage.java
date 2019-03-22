@@ -11,11 +11,11 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 
-public class DisplayTaskPage extends Application {
+public class SingleTaskPage extends Application {
 
     private Task t;
     private Date todaysDate  = new Date();
-    public DisplayTaskPage(Task task){
+    public SingleTaskPage(Task task){
         t = task;
     }
 

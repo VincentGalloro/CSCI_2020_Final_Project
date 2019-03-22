@@ -1,8 +1,8 @@
 
 package com.main.pages;
 
-import com.main.GenerateTaskDisplay;
-import com.main.TaskLoader;
+import com.main.TaskPaneGenerator;
+import com.main.TaskPoolQuery;
 import com.main.TaskPool;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -12,19 +12,18 @@ import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import java.util.ArrayList;
 
 
 public class HomePage extends Application{
     
-    private TaskPool taskPool;
-    private TaskLoader taskLoader;
+    private final TaskPool taskPool;
+    private final TaskPoolQuery taskPoolQuery;
     private BorderPane mainPane;
 
     public HomePage(){
         taskPool = new TaskPool();
         taskPool.load();
-        taskLoader = new TaskLoader(taskPool);
+        taskPoolQuery = new TaskPoolQuery(taskPool);
         mainPane = new BorderPane();
     }
     
@@ -36,7 +35,7 @@ public class HomePage extends Application{
         ImageView addTaskButton = new ImageView(new Image("file:images/addTaskButton.png"));
         
         addTaskButton.setOnMousePressed(e -> {
-            CreateTaskPage tap = new CreateTaskPage(taskPool, new Refresher());  
+            CreateTaskPage tap = new CreateTaskPage(taskPool, this::refresh);  
             Stage stage = new Stage();
             tap.start(stage);
         });
@@ -59,7 +58,7 @@ public class HomePage extends Application{
             //taskPool.addTask(task);
         //}
         
-        new Refresher().refresh();
+        refresh();
         
         //Add GridPanes to BorderPane
         mainPane.setBottom(holdButtonsPane);
@@ -69,11 +68,9 @@ public class HomePage extends Application{
         primaryStage.show();
     }
 
-    public class Refresher{
-        public void refresh(){
-            GenerateTaskDisplay gtd = taskLoader.createDisplay();
-            mainPane.setRight(gtd.generateDisplay());
-        }
+    public void refresh(){
+        TaskPaneGenerator tpg = new TaskPaneGenerator(taskPoolQuery.getTasks());
+        mainPane.setRight(tpg.generateTaskPane());
     }
     
     public void stop(){

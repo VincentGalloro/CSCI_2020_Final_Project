@@ -7,12 +7,12 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class TaskLoader {
+public class TaskPoolQuery {
     
     private final ArrayList<Filter> filters;
     private final TaskPool taskPool;
     
-    public TaskLoader(TaskPool taskPool){
+    public TaskPoolQuery(TaskPool taskPool){
         this.taskPool = taskPool;
         this.filters = new ArrayList<>();
     }
@@ -20,7 +20,7 @@ public class TaskLoader {
     public void clearFilters(){ filters.clear(); }
     public void addFilter(Filter f){ filters.add(f); }
     
-    private ArrayList<Task> getTasks(){
+    public ArrayList<Task> getTasks(){
         Stream<Task> taskStream = taskPool.getTasks();
         for(Filter f : filters){
             taskStream = taskStream.filter(f::shouldAllow);
@@ -31,9 +31,5 @@ public class TaskLoader {
         Collections.shuffle(ts);
         
         return ts;
-    }
-    
-    public GenerateTaskDisplay createDisplay(){
-        return new GenerateTaskDisplay(getTasks());
     }
 }

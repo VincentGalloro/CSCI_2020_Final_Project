@@ -1,7 +1,6 @@
 
 package com.main.pages;
 
-import com.main.pages.HomePage.Refresher;
 import com.main.Task;
 import com.main.TaskPool;
 import javafx.geometry.Insets;
@@ -16,9 +15,9 @@ public class CreateTaskPage{
     
     private final TaskPool taskPool;
     private TextField nameField, notesField;
-    private Refresher refresher;
+    private Runnable refresher;
     
-    public CreateTaskPage(TaskPool taskPool, Refresher refresher){
+    public CreateTaskPage(TaskPool taskPool, Runnable refresher){
         this.taskPool = taskPool;
         this.refresher = refresher;
         nameField = new TextField();
@@ -45,7 +44,7 @@ public class CreateTaskPage{
         okButton.setOnMousePressed(e -> {
             Task t = createTask();
             taskPool.addTask(t);
-            refresher.refresh();
+            refresher.run();
         });
         
         pane.add(new Label("Task name: "), 0, 0);
