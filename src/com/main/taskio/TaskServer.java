@@ -4,12 +4,9 @@ import com.main.Task;
 import com.main.TaskPool;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.function.Consumer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TaskServer implements Runnable{
 
