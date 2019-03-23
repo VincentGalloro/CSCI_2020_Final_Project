@@ -15,8 +15,8 @@ public class ReceiveTaskPage{
     private TextArea area;
     private TaskServer server;
     
-    public ReceiveTaskPage(TaskPool taskPool){
-        server = new TaskServer(taskPool, this::writeLine);
+    public ReceiveTaskPage(TaskPool taskPool, Runnable refresher){
+        server = new TaskServer(taskPool, this::writeLine, refresher);
     }
     
     public void start(Stage stage){

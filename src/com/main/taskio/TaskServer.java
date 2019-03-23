@@ -13,10 +13,12 @@ public class TaskServer implements Runnable{
     private Consumer<String> log;
     private TaskPool taskPool;
     private ServerSocket server;
+    private Runnable refresher;
     
-    public TaskServer(TaskPool taskPool, Consumer<String> log){
+    public TaskServer(TaskPool taskPool, Consumer<String> log, Runnable refresher){
         this.taskPool = taskPool;
         this.log = log;
+        this.refresher = refresher;
     }
 
     public void run() {
@@ -45,10 +47,13 @@ public class TaskServer implements Runnable{
                 for(int i = 0; i < taskCount; i++){
                     Task t = reader.loadTask();
                     taskPool.addTask(t);
+                    refresher.run();
                     log.accept("Received Task from "+name+": "+t.getName());
                 }
 
                 sin.close();
+                
+                log.accept("Bye "+name);
 
             }
         } catch (IOException ex) {

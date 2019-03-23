@@ -1,9 +1,8 @@
 package com.main.pages;
 
 import com.main.Task;
-import com.main.TaskPool;
 import com.main.taskio.TaskClient;
-import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
@@ -16,8 +15,8 @@ public class SendTaskPage{
     private TextArea area;
     private TaskClient client;
     
-    public SendTaskPage(){
-        client = new TaskClient(new ArrayList<Task>(), this::writeLine);
+    public SendTaskPage(List<Task> tasks){
+        client = new TaskClient(tasks, this::writeLine);
     }
     
     public void start(Stage stage){
@@ -31,6 +30,8 @@ public class SendTaskPage{
         
         stage.setScene(new Scene(pane));
         stage.show();
+        
+        new Thread(client).start();
     }
     
     public void writeLine(String s){
