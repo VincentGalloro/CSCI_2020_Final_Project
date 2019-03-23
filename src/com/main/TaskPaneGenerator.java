@@ -1,4 +1,3 @@
-
 package com.main;
 
 import com.main.pages.SingleTaskPage;
@@ -35,37 +34,39 @@ public class TaskPaneGenerator {
         taskname.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn<Task ,Float> duedate = new TableColumn<>("Due Date");
-        duedate.setPrefWidth(100);
+        duedate.setPrefWidth(210);
         duedate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
 
+        TableColumn <Task, Button> edit = new TableColumn<>("Action");
+        edit.setPrefWidth(70);
+        edit.setCellValueFactory(new PropertyValueFactory<>("button"));
+        
+        /*
+        taskname.setStyle("-fx-background-color: 		PALEGOLDENROD");
+        duedate.setStyle("-fx-background-color: 		PALEGOLDENROD");
+        edit.setStyle("-fx-background-color: 		PALEGOLDENROD");
+        */
+        
         //add the columns to the table
         this.Tasks = new TableView<>();
-        this.Tasks.getColumns().add(taskname);
-        this.Tasks.getColumns().add(duedate);
-        
-        paneGenerator.setCenter(Tasks);
-        
-        VBox vBox = new VBox();
+        Tasks.setStyle("-fx-table-cell-border-color: transparent;");
+        this.Tasks.getColumns().addAll(taskname, duedate, edit);
+       
+        //Link edit button to task
         for(Task t : tasks){
-            vBox.getChildren().add(generateSingleTaskPane(t));
+            linkEditButton(t);
         }
-        paneGenerator.setRight(vBox);
-        this.Tasks.setItems(GatherData.getAllMarks(tasks));
+        paneGenerator.setLeft(Tasks);
+
+        this.Tasks.setItems(GatherData.getAllTasks(tasks));
         return paneGenerator; //also change this line
     }
     
-    public GridPane generateSingleTaskPane(Task t){
-        //aabid implement this function!!
-        //again, you can change pane if you have a better type in mind
-        GridPane taskPane = new GridPane();
-        Button btEdit = new Button("Edit Task");
-        btEdit.setOnMousePressed(e -> {
+    public void linkEditButton(Task t){
+        t.getButton().setOnMousePressed(e -> {
             SingleTaskPage dtp = new SingleTaskPage(t, refresher);  
             Stage stage = new Stage();
             dtp.start(stage);
         });
-        btEdit.widthProperty();
-        taskPane.add(btEdit, 0, 1);
-        return taskPane;
     }
 }

@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import javafx.scene.control.Button;
 
 public class Task {
     
@@ -16,12 +17,16 @@ public class Task {
     private Date dueDate, completionDate;
     private boolean isCompleted;
     private TaskPriority priority;
+        private Button button;
+
     
     public Task(String name){
         this.name = name;
         this.notes = "";
         this.priority = TaskPriority.LOW;
         this.dueDate = new Date();
+                this.button = new Button("Edit");
+
     }
     
     public void setNotes(String notes){ this.notes = notes; }
@@ -46,6 +51,8 @@ public class Task {
     public Date getCompletionDate(){ return completionDate; }
     public boolean isCompleted(){ return isCompleted; }
     public TaskPriority getPriority(){ return priority; }
+        public Button getButton(){ return button; }
+
     
     public String toString(){
         return "Task: "+name+"  Due Date: "+dueDate+"  Priority: "+priority+"  Notes: "+notes;

@@ -1,4 +1,3 @@
-
 package com.main.pages;
 
 import com.main.TaskPaneGenerator;
@@ -31,8 +30,7 @@ public class HomePage extends Application{
     public void start(Stage primaryStage){
         //Pane that holds the pane for buttons
         BorderPane holdButtonsPane = new BorderPane();
-        Button btTaskReceive = new Button("Receive A Task");
-        Button btTaskSend = new Button("Send A Task");
+        Button btFriendTask = new Button("Receive Friend Task");
         ImageView settingsButton = new ImageView(new Image("file:images/settingsButton.png"));
         ImageView addTaskButton = new ImageView(new Image("file:images/addTaskButton.png"));
         
@@ -41,7 +39,7 @@ public class HomePage extends Application{
             Stage stage = new Stage();
             ctp.start(stage);
         });
-        btTaskReceive.setOnMousePressed(e -> {
+        btFriendTask.setOnMousePressed(e -> {
             ReceiveTaskPage rtp = new ReceiveTaskPage(taskPool);
             Stage stage = new Stage();
             rtp.start(stage);
@@ -51,10 +49,9 @@ public class HomePage extends Application{
         GridPane buttonsPane = new GridPane(); 
         buttonsPane.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
         buttonsPane.setHgap(10);
-        buttonsPane.add(btTaskSend, 0, 0);
-        buttonsPane.add(btTaskReceive, 1, 0);
-        buttonsPane.add(settingsButton, 2, 0);
-        buttonsPane.add(addTaskButton, 3, 0);
+        buttonsPane.add(btFriendTask, 0, 0);
+        buttonsPane.add(settingsButton, 1, 0);
+        buttonsPane.add(addTaskButton, 2, 0);
         holdButtonsPane.setRight(buttonsPane);
         
         //RNG
