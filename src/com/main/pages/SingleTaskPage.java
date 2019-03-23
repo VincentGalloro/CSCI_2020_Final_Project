@@ -2,6 +2,7 @@ package com.main.pages;
 import com.main.Task;
 import com.main.TaskPriority;
 import java.util.ArrayList;
+import java.io.File;
 import java.util.Date;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -9,7 +10,9 @@ import javafx.geometry.Pos;
 import javafx.scene.text.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -73,19 +76,18 @@ public class SingleTaskPage extends Application {
         //Button to display the priority of task
         Button bPriority = new Button();
         bPriority.setPadding(new Insets(5, 5, 5, 5));
+        bPriority.setText("This task is of " + t.getPriority().toString()+ " priority");
         //color coding
         if(t.getPriority()==TaskPriority.HIGH){
-            bPriority.setText("This task is of HIGH priority");
             bPriority.setTextFill(Color.RED);
         }
         if(t.getPriority()==TaskPriority.MEDIUM){
-            bPriority.setText("This task is of MEDIUM priority");
             bPriority.setTextFill(Color.BLUE);
         }
         if(t.getPriority()==TaskPriority.LOW){
-            bPriority.setText("This task is of LOW priority");
             bPriority.setTextFill(Color.GREEN);
         }
+
                 
         bPriority.setStyle("-fx-border-color: rgb(253,255,226); -fx-background-color : rgb(253,255,226); -fx-opacity: 1.0; -fx-border-radius: 5");
         bPriority.setFont(Font.font("Consolas", FontWeight.SEMI_BOLD, 16));
@@ -98,38 +100,90 @@ public class SingleTaskPage extends Application {
         Button bEditDueIn = new Button();
         bEditDueIn.setGraphic(IeditDueIn);
         bEditDueIn.setStyle("-fx-background-color : rgb(253,255,226); -fx-border-color: #000000");
+        
+        
+//        bEditDueIn.setOnMousePressed(e->{
+//            
+//        //adding choice box to display choicbox to change the priority of the task
+//
+//            Pane choicePane = new Pane();
+//            ChoiceBox<TaskPriority> selectPriority = new ChoiceBox<>();
+//            //selectPriority.setValue(t.getPriority());
+//            selectPriority.getItems().addAll(TaskPriority.HIGH,TaskPriority.MEDIUM, TaskPriority.LOW );
+//            
+//            Label lTest = new Label("TEst");
+//            choicePane.getChildren().addAll(selectPriority, lTest);
+//            Scene scene = new Scene(choicePane, 300, 200);
+//            Stage secondStage = new Stage();
+//            secondStage.setTitle("Edit Priority");
+//            secondStage.show();
+//            t.setTaskPriority(selectPriority.getValue());
+//        });
+
         HBox hb2 = new HBox(bPriority, bEditDueIn);
         hb2.setPadding(new Insets(5, 5, 5, 5));
         hb2.setSpacing(7);
 
         
-        
+        //displaying the notes
         Label lNotes = new Label("Notes");
-        lNotes.setFont(Font.font("Consolas", FontWeight.BOLD, 17));
+        lNotes.setFont(Font.font("Consolas", FontWeight.BOLD, 16));
         lNotes.setPadding(new Insets(5,5,5,5));
         lNotes.setStyle("-fx-border-color: black;");
         lNotes.setStyle("-fx-border-color: #000000;-fx-border-radius: 7");
 
-        //TODO -method to get text
+        
         TextField tfDisplayNotes = new TextField();
         tfDisplayNotes.prefWidthProperty().bind(root.widthProperty());
-        tfDisplayNotes.prefHeightProperty().bind(root.heightProperty().multiply(0.3));
+        tfDisplayNotes.prefHeightProperty().bind(root.heightProperty().multiply(0.25));
         tfDisplayNotes.setText(t.getNotes());
         tfDisplayNotes.setAlignment(Pos.TOP_LEFT);
         tfDisplayNotes.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
         tfDisplayNotes.setDisable(true);
         tfs.add(tfDisplayNotes);
         
+        //Label to display "Attachements"
+        Label lAttachments = new Label("Attachments");
+        lAttachments.setFont(Font.font("Consolas", FontWeight.BOLD, 16));
+        lAttachments.setPadding(new Insets(5,5,5,5));
+        lAttachments.setStyle("-fx-border-color: black;");
+        lAttachments.setStyle("-fx-border-color: #000000;-fx-border-radius: 7");
+        
+        TextField tfAttachments = new TextField();
+        tfAttachments.prefWidthProperty().bind(root.widthProperty());
+        tfAttachments.prefHeightProperty().bind(root.heightProperty().multiply(0.15));
+        if((t.getAttachedFiles())==null){
+            tfAttachments.setText("No files attached");
+        }
+        else{
+            String attachmentNames = "";
+            for (File file : t.getAttachedFiles()){
+                attachmentNames += file.getName()+"\n";
+            }
+            tfAttachments.setText(attachmentNames);
+        }
+        tfAttachments.setAlignment(Pos.TOP_LEFT);
+        tfAttachments.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
+        tfAttachments.setDisable(true);
+        tfs.add(tfAttachments);
+         
 
         //refresher.run();
+        
+        
 
-        root.getChildren().addAll(hb1, hb2, lNotes, tfDisplayNotes);
+        root.getChildren().addAll(hb1, hb2, lNotes, tfDisplayNotes, lAttachments, tfAttachments);
 
 
 
         primaryStage.setTitle(t.getName());
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
+    }
+    
+    
+    private void buttonClicked(){
+        
     }
 
     /*

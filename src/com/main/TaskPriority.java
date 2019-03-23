@@ -1,8 +1,7 @@
 
 package com.main;
 
-import java.awt.Color;
-
+import javafx.scene.paint.Color;
 public enum TaskPriority {
     LOW (Color.GREEN),
     MEDIUM (Color.BLUE),

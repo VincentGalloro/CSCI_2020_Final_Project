@@ -3,6 +3,7 @@ package com.main;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Task {
@@ -11,6 +12,7 @@ public class Task {
     private String notes;
     private BufferedImage thumbnail;
     private File attachedFile;
+    private ArrayList<File> attachedFiles;
     private Date dueDate, completionDate;
     private boolean isCompleted;
     private TaskPriority priority;
@@ -24,7 +26,7 @@ public class Task {
     
     public void setNotes(String notes){ this.notes = notes; }
     public void setThumbnail(BufferedImage thumbnail){ this.thumbnail = thumbnail; }
-    public void setAttachedFile(File attachedFile){ this.attachedFile = attachedFile; }
+    public void setAttachedFile(File attachedFile){ this.attachedFiles.add(attachedFile); }
     public void setDueDate(Date dueDate){ this.dueDate = dueDate; }
     public void setTaskPriority(TaskPriority priority){ this.priority = priority; }
     
@@ -39,7 +41,7 @@ public class Task {
     public String getName(){ return name; }
     public String getNotes(){ return notes; }
     public BufferedImage getThumbnail(){ return thumbnail; }
-    public File getAttachedFile(){ return attachedFile; }
+    public ArrayList<File> getAttachedFiles(){ return attachedFiles; }
     public Date getDueDate(){ return dueDate; }
     public Date getCompletionDate(){ return completionDate; }
     public boolean isCompleted(){ return isCompleted; }
