@@ -29,7 +29,6 @@ public class HomePage extends Application{
     }
     
     public void start(Stage primaryStage){
-        
         //Pane that holds the pane for buttons
         BorderPane holdButtonsPane = new BorderPane();
         Button btFriendTask = new Button("Receive Friend Task");
@@ -71,7 +70,7 @@ public class HomePage extends Application{
         //Add GridPanes to BorderPane
         mainPane.setBottom(holdButtonsPane);
                 
-        Scene scene = new Scene(mainPane, 550, 500);
+        Scene scene = new Scene(mainPane, 550, 550);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
