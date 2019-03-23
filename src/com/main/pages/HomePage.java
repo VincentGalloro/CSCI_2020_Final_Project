@@ -37,9 +37,14 @@ public class HomePage extends Application{
         ImageView addTaskButton = new ImageView(new Image("file:images/addTaskButton.png"));
         
         addTaskButton.setOnMousePressed(e -> {
-            CreateTaskPage tap = new CreateTaskPage(taskPool, this::refresh);  
+            CreateTaskPage ctp = new CreateTaskPage(taskPool, this::refresh);  
             Stage stage = new Stage();
-            tap.start(stage);
+            ctp.start(stage);
+        });
+        btFriendTask.setOnMousePressed(e -> {
+            ReceiveTaskPage rtp = new ReceiveTaskPage(taskPool);
+            Stage stage = new Stage();
+            rtp.start(stage);
         });
         
         //Pane that has the settings and add new task buttons
