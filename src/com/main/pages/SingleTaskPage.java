@@ -196,17 +196,33 @@ public class SingleTaskPage extends Application {
         }
         else{
             
-            for (File file : t.getAttachedFiles()){
-                attachmentNames += file.getName()+"\n";
-            }
-            tfAttachments.setText(attachmentNames);
+           for (File file : t.getAttachedFiles()){
+ 
+              attachmentNames += (file.getName() +   "     |     ");
+           }           tfAttachments.setText(attachmentNames);
         }
         tfAttachments.setAlignment(Pos.TOP_LEFT);
         tfAttachments.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
         tfAttachments.setDisable(true);
         tfs.add(tfAttachments);
+        
+        root.getChildren().addAll(hb1, hb2, lNotes, tfDisplayNotes, hb3, tfAttachments);
          
-
+        //Display a message and completion Date if task has been completed
+        if(t.isCompleted() == true){
+            Label lTaskCompleted = new Label();
+            String message = "This task was completed on " + t.getCompletionDate();
+            lTaskCompleted.setText(message);
+            lTaskCompleted.prefWidthProperty().bind(root.widthProperty());
+            lTaskCompleted.setFont(Font.font("Consolas", FontWeight.BOLD, 16));
+            lTaskCompleted.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
+            root.getChildren().add(lTaskCompleted);
+        }
+        
+        
+       
+        
+        
         //refresher.run();
         
         
@@ -220,6 +236,10 @@ public class SingleTaskPage extends Application {
         primaryStage.show();
     }
     
+//    public void refresh(){
+//        
+//    }
+//    
     
     //TODO add refresh when submit is pressed in task priority
     //TODO add refresh when file chooser is closed
