@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -20,6 +21,7 @@ public class HomePage extends Application{
     private final TaskPool taskPool;
     private final TaskPoolQuery taskPoolQuery;
     private BorderPane mainPane;
+    private GridPane tasksPane = new GridPane();
 
     public HomePage(){
         taskPool = new TaskPool();
@@ -61,23 +63,20 @@ public class HomePage extends Application{
         buttonsPane.add(settingsButton, 2, 0);
         buttonsPane.add(addTaskButton, 3, 0);
         holdButtonsPane.setRight(buttonsPane);
-        
-        //RNG
-        //RandomTaskGenerator taskGenerator = new RandomTaskGenerator();
-        //ArrayList<Task> tasks = taskGenerator.generateTaskArray(5);
 
-        //Task Display
-        //GenerateTaskDisplay taskDisplay = new GenerateTaskDisplay(tasks);
-        //for(Task task : tasks){
-            //taskPool.addTask(task);
-        //}
+        //Pane for tasks
+        //tasksPane.setAlignment(Pos.CENTER);
+        Label lblHeader = new Label("Tasks");
+        lblHeader.setStyle("-fx-font-weight: bold; -fx-font-size: 40");
         
+        tasksPane.add(lblHeader, 0, 0);
+
         refresh();
         
         //Add GridPanes to BorderPane
         mainPane.setBottom(holdButtonsPane);
                 
-        Scene scene = new Scene(mainPane, 550, 550);
+        Scene scene = new Scene(mainPane, 700, 550);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -85,7 +84,8 @@ public class HomePage extends Application{
     public void refresh(){
         Platform.runLater(() -> {
             TaskPaneGenerator tpg = new TaskPaneGenerator(taskPoolQuery.getTasks(), this::refresh);
-            mainPane.setRight(tpg.generateTaskPane());
+            tasksPane.add(tpg.generateTaskPane(), 0, 1);
+            mainPane.setRight(tasksPane);
         });
     }
     

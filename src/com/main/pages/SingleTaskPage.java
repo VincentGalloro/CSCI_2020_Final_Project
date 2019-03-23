@@ -227,7 +227,6 @@ public class SingleTaskPage extends Application {
         
         
 
-        root.getChildren().addAll(hb1, hb2, lNotes, tfDisplayNotes, hb3, tfAttachments);
 
 
 

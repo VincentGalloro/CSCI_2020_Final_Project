@@ -17,7 +17,6 @@ public class Task {
     private Date dueDate, completionDate;
     private boolean isCompleted;
     private TaskPriority priority;
-    private Button button;
     
     public Task(String name){
         this.name = name;
@@ -49,7 +48,6 @@ public class Task {
     public Date getCompletionDate(){ return completionDate; }
     public boolean isCompleted(){ return isCompleted; }
     public TaskPriority getPriority(){ return priority; }
-    public Button getButton(){ return button; }
     
     public String toString(){
         return "Task: "+name+"  Due Date: "+dueDate+"  Priority: "+priority+"  Notes: "+notes;
