@@ -3,12 +3,16 @@ package com.main;
 
 import com.main.taskio.TaskReader;
 import com.main.taskio.TaskWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 public class TaskPool {
@@ -21,7 +25,7 @@ public class TaskPool {
     
     public void save(){
         try {
-            FileOutputStream fout = new FileOutputStream(new File("task_saves.txt"));
+            DataOutputStream fout = new DataOutputStream(new FileOutputStream(new File("task_saves.txt")));
             TaskWriter tw = new TaskWriter(fout);
             getTasks().forEach(tw::write);
             fout.close();
@@ -32,13 +36,16 @@ public class TaskPool {
         File f = new File("task_saves.txt");
         if(!f.exists()){ return; }
         try {
-            TaskReader tr = new TaskReader(new FileInputStream(f));
+            DataInputStream fin = new DataInputStream(new FileInputStream(f));
+            TaskReader tr = new TaskReader(fin);
             while(true){
                 Task t = tr.loadTask();
                 if(t == null){ break; }
                 tasks.add(t);
             }
-        } catch (FileNotFoundException ex) {}
+            fin.close();
+        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {}
     }
     
     public void addTask(Task t){ tasks.add(t); }
