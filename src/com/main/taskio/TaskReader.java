@@ -5,6 +5,7 @@ import com.main.Task;
 import com.main.TaskPriority;
 import java.io.DataInputStream;
 import java.io.EOFException;
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -27,7 +28,10 @@ public class TaskReader {
             t.setDueDate(dueDate);
             if(in.readBoolean()){ t.completeTask(); }
             t.setTaskPriority(TaskPriority.values()[in.readInt()]);
-            
+            int fCount = in.readInt();
+            for(int i = 0; i < fCount; i++){
+                t.addAttachedFile(new File(in.readUTF()));
+            }
             return t;
         } catch (EOFException ex) {
             return null;

@@ -13,7 +13,7 @@ public class Task {
     private final String name;
     private String notes;
     private BufferedImage thumbnail;
-    private ArrayList<File> attachedFiles = new ArrayList<>();
+    private ArrayList<File> attachedFiles;
     private Date dueDate, completionDate;
     private boolean isCompleted;
     private TaskPriority priority;
@@ -24,7 +24,7 @@ public class Task {
         this.notes = "";
         this.priority = TaskPriority.LOW;
         this.dueDate = new Date();
-        this.button = new Button("Edit");
+        this.attachedFiles = new ArrayList<>();
     }
     
     public void setNotes(String notes){ this.notes = notes; }
