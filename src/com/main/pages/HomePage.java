@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -31,6 +32,7 @@ public class HomePage extends Application{
         
         //Pane that holds the pane for buttons
         BorderPane holdButtonsPane = new BorderPane();
+        Button btFriendTask = new Button("Receive Friend Task");
         ImageView settingsButton = new ImageView(new Image("file:images/settingsButton.png"));
         ImageView addTaskButton = new ImageView(new Image("file:images/addTaskButton.png"));
         
@@ -44,8 +46,9 @@ public class HomePage extends Application{
         GridPane buttonsPane = new GridPane(); 
         buttonsPane.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
         buttonsPane.setHgap(10);
-        buttonsPane.add(settingsButton, 0, 0);
-        buttonsPane.add(addTaskButton, 1, 0);
+        buttonsPane.add(btFriendTask, 0, 0);
+        buttonsPane.add(settingsButton, 1, 0);
+        buttonsPane.add(addTaskButton, 2, 0);
         holdButtonsPane.setRight(buttonsPane);
         
         //RNG
@@ -63,7 +66,7 @@ public class HomePage extends Application{
         //Add GridPanes to BorderPane
         mainPane.setBottom(holdButtonsPane);
                 
-        Scene scene = new Scene(mainPane, 500, 500);
+        Scene scene = new Scene(mainPane, 550, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
