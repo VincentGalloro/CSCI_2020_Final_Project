@@ -12,9 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -102,23 +100,41 @@ public class SingleTaskPage extends Application {
         bEditDueIn.setStyle("-fx-background-color : rgb(253,255,226); -fx-border-color: #000000");
         
         
-//        bEditDueIn.setOnMousePressed(e->{
-//            
-//        //adding choice box to display choicbox to change the priority of the task
-//
-//            Pane choicePane = new Pane();
-//            ChoiceBox<TaskPriority> selectPriority = new ChoiceBox<>();
-//            //selectPriority.setValue(t.getPriority());
-//            selectPriority.getItems().addAll(TaskPriority.HIGH,TaskPriority.MEDIUM, TaskPriority.LOW );
-//            
-//            Label lTest = new Label("TEst");
-//            choicePane.getChildren().addAll(selectPriority, lTest);
-//            Scene scene = new Scene(choicePane, 300, 200);
-//            Stage secondStage = new Stage();
-//            secondStage.setTitle("Edit Priority");
-//            secondStage.show();
-//            t.setTaskPriority(selectPriority.getValue());
-//        });
+        bEditDueIn.setOnMousePressed(e->{
+            
+        //adding choice box to display choicbox to change the priority of the task
+
+            VBox choicePane = new VBox(10);
+            choicePane.setPadding(new Insets(5,5,5,5));
+            choicePane.setStyle("-fx-background-color: rgb(175,202,129)");
+            
+            //choice box to view priority choices
+            ChoiceBox<TaskPriority> selectPriority = new ChoiceBox<>();
+            selectPriority.setStyle("-fx-background-color : rgb(175,202,129); -fx-border-color: #000000");
+            selectPriority.setValue(t.getPriority());
+            selectPriority.getItems().addAll(TaskPriority.HIGH,TaskPriority.MEDIUM, TaskPriority.LOW );
+            
+            //button to submit the changes
+            Button bSubmit = new Button("Submit");
+            bSubmit.setPadding(new Insets(5, 5, 5, 5));
+            bSubmit.setStyle("-fx-border-color: #000000; -fx-background-color :rgb(175,202,129); -fx-opacity: 1.0; -fx-border-radius: 5");
+            bSubmit.setFont(Font.font("Consolas", FontWeight.SEMI_BOLD, 16));
+
+            
+            choicePane.getChildren().addAll(selectPriority, bSubmit);
+            Scene scene = new Scene(choicePane, 100, 200);
+            Stage secondStage = new Stage();
+            secondStage.setScene(scene);
+            secondStage.setTitle("Edit Priority");
+            secondStage.show();
+           
+            //update the priority and close the secondary stage
+            bSubmit.setOnMousePressed(f->{
+            t.setTaskPriority(selectPriority.getValue());
+                secondStage.close();
+            });
+            
+        });
 
         HBox hb2 = new HBox(bPriority, bEditDueIn);
         hb2.setPadding(new Insets(5, 5, 5, 5));
@@ -182,9 +198,7 @@ public class SingleTaskPage extends Application {
     }
     
     
-    private void buttonClicked(){
-        
-    }
+
 
     /*
     public static void main(String[] args) {
