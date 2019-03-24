@@ -53,6 +53,11 @@ public class HomePage extends Application{
             Stage stage = new Stage();
             rtp.start(stage);
         });
+        settingsButton.setOnMousePressed(e -> {
+            SettingsPage sp = new SettingsPage();
+            Stage stage = new Stage();
+            sp.start(stage);
+        });
         
         //Pane that has the settings and add new task buttons
         GridPane buttonsPane = new GridPane(); 

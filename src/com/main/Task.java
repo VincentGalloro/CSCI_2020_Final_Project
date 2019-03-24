@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
-import javafx.scene.control.Button;
 
 
 public class Task {
@@ -13,7 +12,7 @@ public class Task {
     private final String name;
     private String notes;
     private BufferedImage thumbnail;
-    private ArrayList<File> attachedFiles;
+    private final ArrayList<File> attachedFiles;
     private Date dueDate, completionDate;
     private boolean isCompleted;
     private TaskPriority priority;
