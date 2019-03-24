@@ -76,17 +76,7 @@ public class SingleTaskPage extends Application {
         //Button to display the priority of task
         Button bPriority = new Button();
         bPriority.setPadding(new Insets(5, 5, 5, 5));
-        bPriority.setText("This task is of " + t.getPriority().toString()+ " priority");
-        //color coding
-        if(t.getPriority()==TaskPriority.HIGH){
-            bPriority.setTextFill(Color.RED);
-        }
-        if(t.getPriority()==TaskPriority.MEDIUM){
-            bPriority.setTextFill(Color.BLUE);
-        }
-        if(t.getPriority()==TaskPriority.LOW){
-            bPriority.setTextFill(Color.GREEN);
-        }
+        updateBPriority(bPriority);
 
                 
         bPriority.setStyle("-fx-border-color: rgb(253,255,226); -fx-background-color : rgb(253,255,226); -fx-opacity: 1.0; -fx-border-radius: 5");
@@ -108,18 +98,18 @@ public class SingleTaskPage extends Application {
 
             VBox choicePane = new VBox(10);
             choicePane.setPadding(new Insets(5,5,5,5));
-            choicePane.setStyle("-fx-background-color: rgb(175,202,129)");
+            choicePane.setStyle("-fx-background-color: rgb(105,202,42)");
             
             //choice box to view priority choices
             ChoiceBox<TaskPriority> selectPriority = new ChoiceBox<>();
-            selectPriority.setStyle("-fx-background-color : rgb(175,202,129); -fx-border-color: #000000");
+            selectPriority.setStyle("-fx-background-color : rgb(105,202,42); -fx-border-color: #000000");
             selectPriority.setValue(t.getPriority());
             selectPriority.getItems().addAll(TaskPriority.HIGH,TaskPriority.MEDIUM, TaskPriority.LOW );
             
             //button to submit the changes
             Button bSubmit = new Button("Submit");
             bSubmit.setPadding(new Insets(5, 5, 5, 5));
-            bSubmit.setStyle("-fx-border-color: #000000; -fx-background-color :rgb(175,202,129); -fx-opacity: 1.0; -fx-border-radius: 5");
+            bSubmit.setStyle("-fx-border-color: #000000; -fx-background-color :rgb(105,202,42); -fx-opacity: 1.0; -fx-border-radius: 5");
             bSubmit.setFont(Font.font("Consolas", FontWeight.SEMI_BOLD, 16));
 
             
@@ -134,6 +124,7 @@ public class SingleTaskPage extends Application {
             bSubmit.setOnMousePressed(f->{
             t.setTaskPriority(selectPriority.getValue());
                 secondStage.close();
+                updateBPriority(bPriority);
             });
             
         });
@@ -239,6 +230,10 @@ public class SingleTaskPage extends Application {
 //        
 //    }
 //    
+    public void updateBPriority(Button bPriority){
+        bPriority.setText("This task is of "+ t.getPriority().toString() + " priority");
+        bPriority.setTextFill(t.getPriority().color);
+    }
     
     //TODO add refresh when submit is pressed in task priority
     //TODO add refresh when file chooser is closed
