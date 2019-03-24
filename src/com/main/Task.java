@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class Task {
     
-    private final String name;
+    private String name;
     private String notes;
     private BufferedImage thumbnail;
     private final ArrayList<File> attachedFiles;
@@ -25,6 +25,7 @@ public class Task {
         this.attachedFiles = new ArrayList<>();
     }
     
+    public void setTaskName(String name){this.name = name;}
     public void setNotes(String notes){ this.notes = notes; }
     public void setThumbnail(BufferedImage thumbnail){ this.thumbnail = thumbnail; }
     public void addAttachedFile(File attachedFile){ this.attachedFiles.add(attachedFile); }

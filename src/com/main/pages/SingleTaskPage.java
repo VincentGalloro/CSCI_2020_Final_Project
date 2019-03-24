@@ -252,6 +252,10 @@ public class SingleTaskPage extends Application {
         bSave.setFont(Font.font("Consolas", FontWeight.BOLD, 16));
         bSave.setStyle("-fx-background-color : rgb(253,255,226); -fx-border-color: #000000; -fx-border-radius: 5");
         
+        bSave.setOnMousePressed(e->{
+           save(tfTaskName, tfDueDate, taDisplayNotes); 
+        });
+        
         //Adding edit and save buttons to Hbox
         HBox hb4 = new HBox(bSave, bEdit);
         hb4.setPadding(new Insets(5, 5, 5, 5));
@@ -299,8 +303,17 @@ public class SingleTaskPage extends Application {
     }
     
     
-    public void save(){
+    public void save(TextField TaskName, TextField dueDate, TextArea taDisplayNotes){
+        t.setTaskName(TaskName.getText());
+        TaskName.setText(t.getName());
         
+        dueDate.setDisable(true);
+        
+        t.setNotes(taDisplayNotes.getText());
+        taDisplayNotes.setText(t.getNotes());
+        taDisplayNotes.setEditable(false);
+        taDisplayNotes.setDisable(true);
+        refresher.run();
     }
     
     //TODO add edit button at the bottom
