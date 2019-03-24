@@ -16,19 +16,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 
 
-public class HomePage extends Application{
+public class HomePage{
     
+    private final String name;
     private final TaskPool taskPool;
     private final TaskPoolQuery taskPoolQuery;
     private BorderPane mainPane;
     private GridPane tasksPane;
     private GridPane filtersPane;
 
-    public HomePage(){
-        taskPool = new TaskPool();
+    public HomePage(String name){
+        this.name = name;
+        taskPool = new TaskPool(name);
         taskPool.load();
         taskPoolQuery = new TaskPoolQuery(taskPool);
         mainPane = new BorderPane();
@@ -76,7 +77,7 @@ public class HomePage extends Application{
         holdButtonsPane.setRight(buttonsPane);
 
         //Pane for tasks
-        Label lblTaskHeader = new Label("Tasks");
+        Label lblTaskHeader = new Label("Tasks ("+name+")");
         tasksPane.setHalignment(lblTaskHeader, HPos.CENTER);
         lblTaskHeader.setAlignment(Pos.CENTER);
         lblTaskHeader.setStyle("-fx-font-weight: bold; -fx-font-size: 40");
@@ -103,9 +104,5 @@ public class HomePage extends Application{
     
     public void stop(){
         taskPool.save();
-    }
-    
-    public static void main(String[] args){
-        Application.launch(args);
     }
 }

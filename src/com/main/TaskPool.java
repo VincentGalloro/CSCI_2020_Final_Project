@@ -15,15 +15,17 @@ import java.util.stream.Stream;
 
 public class TaskPool {
     
+    private final String name;
     private final ArrayList<Task> tasks;
     
-    public TaskPool(){
+    public TaskPool(String name){
+        this.name = name;
         tasks = new ArrayList<>();
     }
     
     public void save(){
         try {
-            DataOutputStream fout = new DataOutputStream(new FileOutputStream(new File("task_saves.txt")));
+            DataOutputStream fout = new DataOutputStream(new FileOutputStream(new File("tasks_"+name+".txt")));
             TaskWriter tw = new TaskWriter(fout);
             getTasks().forEach(tw::write);
             fout.close();
@@ -31,7 +33,7 @@ public class TaskPool {
         } catch (IOException ex) {}
     }
     public void load(){
-        File f = new File("task_saves.txt");
+        File f = new File("tasks_"+name+".txt");
         if(!f.exists()){ return; }
         try {
             DataInputStream fin = new DataInputStream(new FileInputStream(f));

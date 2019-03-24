@@ -124,7 +124,8 @@ public class SingleTaskPage extends Application {
            
             //update the priority and close the secondary stage
             bSubmit.setOnMousePressed(f->{
-            t.setTaskPriority(selectPriority.getValue());
+                t.setTaskPriority(selectPriority.getValue());
+                refresher.run();
                 secondStage.close();
                 updateBPriority(bPriority);
             });
@@ -191,6 +192,7 @@ public class SingleTaskPage extends Application {
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
             if(selectedFile != null){
                 t.addAttachedFile(selectedFile);
+                refresher.run();
                 updateAttachments(tfAttachments);
             }
         });
