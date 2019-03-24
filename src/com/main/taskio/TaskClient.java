@@ -23,7 +23,7 @@ public class TaskClient implements Runnable{
     public void run() {
         Socket socket;
         try {
-            socket = new Socket("localhost", 8000);
+            socket = new Socket("localhost", 12836);
             log.accept("Connected to Server");
         } catch (IOException ex) {
             ex.printStackTrace();

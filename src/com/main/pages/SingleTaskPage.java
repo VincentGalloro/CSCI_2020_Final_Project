@@ -36,6 +36,7 @@ public class SingleTaskPage extends Application {
 
     @Override
     public void start(Stage primaryStage){
+        
         VBox root = new VBox(10);
         root.setStyle("-fx-background-color: rgb(253,255,226)");
         root.prefWidthProperty().bind(primaryStage.widthProperty().multiply(0.8));
@@ -172,6 +173,7 @@ public class SingleTaskPage extends Application {
  
         tfAttachments.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
         tfAttachments.setDisable(false);
+        tfAttachments.setEditable(false);
         
         
         //button to add attachments
@@ -212,12 +214,40 @@ public class SingleTaskPage extends Application {
         }
         
         
+        //Adding the edit and save button 
+        Button bEdit = new Button("Edit");
+        bEdit.setFont(Font.font("Consolas", FontWeight.BOLD, 16));
+        bEdit.setStyle("-fx-background-color : rgb(253,255,226); -fx-border-color: #000000; -fx-border-radius: 5");
+        Button bSave = new Button("Save");
+        bSave.setFont(Font.font("Consolas", FontWeight.BOLD, 16));
+        bSave.setStyle("-fx-background-color : rgb(253,255,226); -fx-border-color: #000000; -fx-border-radius: 5");
+        
+        //Adding edit and save buttons to Hbox
+        HBox hb4 = new HBox(bSave, bEdit);
+        hb4.setPadding(new Insets(5, 5, 5, 5));
+        hb4.setSpacing(7);
+        hb4.setStyle("-fx-background-color : rgb(253,255,226); -fx-border-color: rgb(253,255,226);");
+        
+        //Adding hbox to bottom pane
+        BorderPane bottomPane = new BorderPane();
+        bottomPane.setRight(hb4);
+        bottomPane.setPadding(new Insets(5,5,5,5));
+        bottomPane.setStyle("-fx-background-color : rgb(253,255,226); -fx-border-color: rgb(253,255,226)");
+        
+        //Adding bottomPane to wrapper border pane
+        BorderPane BPwrapper = new BorderPane();
+        BPwrapper.setPadding(new Insets(5,5,5,5));
+        BPwrapper.setCenter(root);
+        BPwrapper.setBottom(bottomPane);
+       
+        
+        
       
 
 
 
         primaryStage.setTitle(t.getName());
-        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.setScene(new Scene(BPwrapper, 800, 600));
         primaryStage.show();
     }
     

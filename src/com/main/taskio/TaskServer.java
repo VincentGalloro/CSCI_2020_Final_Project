@@ -23,7 +23,7 @@ public class TaskServer implements Runnable{
 
     public void run() {
         try {
-            server = new ServerSocket(8000);
+            server = new ServerSocket(12836);
             log.accept("Server started: "+server.toString());
         } catch (IOException ex) {
             ex.printStackTrace();
