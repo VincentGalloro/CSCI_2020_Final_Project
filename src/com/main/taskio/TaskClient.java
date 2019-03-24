@@ -12,10 +12,12 @@ import java.util.logging.Logger;
 
 public class TaskClient implements Runnable{
     
+    private final String name;
     private final List<Task> tasks;
     private final Consumer<String> log;
     
-    public TaskClient(List<Task> tasks, Consumer<String> log){
+    public TaskClient(String name, List<Task> tasks, Consumer<String> log){
+        this.name = name;
         this.tasks = tasks;
         this.log = log;
     }
@@ -34,7 +36,7 @@ public class TaskClient implements Runnable{
         DataOutputStream sout;
         try {
             sout = new DataOutputStream(socket.getOutputStream());
-            sout.writeUTF("Vincent");
+            sout.writeUTF(name);
             
             TaskWriter taskWriter = new TaskWriter(sout);
             

@@ -51,7 +51,7 @@ public class HomePage{
             ctp.start(stage);
         });
         btSendTask.setOnMousePressed(e -> {
-            SendTaskPage stp = new SendTaskPage(taskPoolQuery.getTasks());
+            SendTaskPage stp = new SendTaskPage(name, taskPoolQuery.getTasks());
             Stage stage = new Stage();
             stp.start(stage);
         });

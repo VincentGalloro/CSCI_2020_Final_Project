@@ -15,8 +15,8 @@ public class SendTaskPage{
     private TextArea area;
     private TaskClient client;
     
-    public SendTaskPage(List<Task> tasks){
-        client = new TaskClient(tasks, this::writeLine);
+    public SendTaskPage(String name, List<Task> tasks){
+        client = new TaskClient(name, tasks, this::writeLine);
     }
     
     public void start(Stage stage){
