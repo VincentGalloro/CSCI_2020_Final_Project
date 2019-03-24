@@ -26,7 +26,7 @@ public class LoginPage extends Application{
     public void start(Stage stage){
         StackPane pane = new StackPane();
         
-        ImageView splash = new ImageView(new Image("file:Images/splash.png"));
+        ImageView splash = new ImageView(new Image("file:Images/splash2.png"));
         
         Button b = new Button("Login");
         b.setFont(Font.font(20));
@@ -41,7 +41,7 @@ public class LoginPage extends Application{
         box.setSpacing(10);
         //box.setAlignment(Pos.CENTER);
         box.setLayoutY(220);
-        box.setLayoutX(150);
+        box.setLayoutX(145);
         Pane p1 = new Pane(box);
         
         pane.getChildren().addAll(splash, p1);

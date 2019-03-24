@@ -65,6 +65,7 @@ public class TaskPaneGenerator {
         Button btEdit = new Button("Edit");
         linkEditButton(t, btEdit);
         CheckBox taskState = new CheckBox("");
+        taskState.setSelected(t.isCompleted());
         linkTaskStateCB(t, taskState);
         vBox.getChildren().addAll(lblTaskName, lblDueDate);
         hBox.getChildren().addAll(vBox, btEdit, taskState);
