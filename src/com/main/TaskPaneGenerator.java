@@ -70,13 +70,13 @@ public class TaskPaneGenerator {
         hBox.getChildren().addAll(vBox, btEdit, taskState);
         hBox.setAlignment(Pos.CENTER);
         if (t.getPriority() == TaskPriority.LOW){
-            hBox.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-color: GREENYELLOW");
+            hBox.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: GREENYELLOW");
         }
         else if (t.getPriority() == TaskPriority.MEDIUM){
-            hBox.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-color: YELLOW");
+            hBox.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: YELLOW");
         }
         else {
-            hBox.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-color: RED");
+            hBox.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: RED");
         }
         return hBox;
     }
