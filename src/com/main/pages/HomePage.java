@@ -33,7 +33,7 @@ public class HomePage extends Application{
         taskPoolQuery = new TaskPoolQuery(taskPool);
         mainPane = new BorderPane();
         tasksPane = new GridPane();
-        filtersPane = new GridPane();
+        //filtersPane = new GridPane();
     }
     
     public void start(Stage primaryStage){
@@ -60,7 +60,7 @@ public class HomePage extends Application{
             rtp.start(stage);
         });
 	settingsButton.setOnMousePressed(e -> {
-            SettingsPage sp = new SettingsPage();
+            SettingsPage sp = new SettingsPage(taskPoolQuery, this::refresh);
             Stage stage = new Stage();
             sp.start(stage);
         });
@@ -82,21 +82,6 @@ public class HomePage extends Application{
         lblTaskHeader.setStyle("-fx-font-weight: bold; -fx-font-size: 40");
         tasksPane.add(lblTaskHeader, 0, 0);
         
-        /*
-        //Pane for filters
-        Label lblFilterHeader = new Label("Filter by");
-        filtersPane.add(lblFilterHeader, 0, 0);
-        filtersPane.setPadding(new Insets(0, 0, 0, 20));
-
-        filtersPane.setVgap(10);
-        Button btDueDate = new Button("Due Date");
-        Button btFilterWeek = new Button("Week");
-        Button btPriority= new Button("Priority");
-        filtersPane.add(btDueDate, 0, 1);
-        filtersPane.add(btFilterWeek, 0, 2);
-        filtersPane.add(btPriority, 0, 3);
-        */
-        
         refresh();
         
         //Add GridPanes to BorderPane
@@ -112,7 +97,6 @@ public class HomePage extends Application{
         Platform.runLater(() -> {
             TaskPaneGenerator tpg = new TaskPaneGenerator(taskPoolQuery.getTasks(), this::refresh);
             tasksPane.add(tpg.generateTaskPane(), 0, 1);
-            
             mainPane.setCenter(tasksPane);
         });
     }
