@@ -56,7 +56,11 @@ public class TaskPaneGenerator {
         vBox.setPadding(new Insets(5, 5, 5, 5));
         Label lblTaskName = new Label("Task: " + t.getName());
         lblTaskName.setStyle("-fx-font-weight: bold");
+        lblTaskName.setMinWidth(300);
+        lblTaskName.setMaxWidth(300);
         Label lblDueDate = new Label("Due date: " + t.getDueDate());
+        lblDueDate.setMaxWidth(300);
+        lblDueDate.setMinWidth(300);
         lblDueDate.setStyle("-fx-font-weight: bold");
         Button btEdit = new Button("Edit");
         linkEditButton(t, btEdit);
@@ -65,7 +69,15 @@ public class TaskPaneGenerator {
         vBox.getChildren().addAll(lblTaskName, lblDueDate);
         hBox.getChildren().addAll(vBox, btEdit, taskState);
         hBox.setAlignment(Pos.CENTER);
-        hBox.setStyle("-fx-border-color: black; -fx-background-color: ALICEBLUE; -fx-border-radius: 10");
+        if (t.getPriority() == TaskPriority.LOW){
+            hBox.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-color: GREENYELLOW");
+        }
+        else if (t.getPriority() == TaskPriority.MEDIUM){
+            hBox.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-color: YELLOW");
+        }
+        else {
+            hBox.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-color: RED");
+        }
         return hBox;
     }
     
