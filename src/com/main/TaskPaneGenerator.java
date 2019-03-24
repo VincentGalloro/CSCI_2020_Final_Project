@@ -3,6 +3,7 @@ package com.main;
 import com.main.pages.SingleTaskPage;
 import java.util.ArrayList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,7 +21,6 @@ public class TaskPaneGenerator {
     
     private ArrayList<Task> tasks;
     private Runnable refresher;
-    private TableView<Task> Tasks;
 
     public TaskPaneGenerator(ArrayList<Task> tasks, Runnable refresher){
         this.tasks = tasks;
@@ -37,6 +37,7 @@ public class TaskPaneGenerator {
 
         VBox vBox = new VBox();
         vBox.setSpacing(20);
+        vBox.setPrefWidth(410);
 
         //Add each task to pane
         for(Task t: tasks){
@@ -58,6 +59,7 @@ public class TaskPaneGenerator {
         linkEditButton(t, btEdit);
         vBox.getChildren().addAll(lblTaskName, lblDueDate, btEdit);
         vBox.setStyle("-fx-border-color: black; -fx-background-color: ALICEBLUE; -fx-border-radius: 10");
+
         return vBox;
     }
     

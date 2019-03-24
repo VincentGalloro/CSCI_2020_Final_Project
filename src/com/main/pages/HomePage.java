@@ -5,15 +5,18 @@ import com.main.TaskPoolQuery;
 import com.main.TaskPool;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 
 
 public class HomePage extends Application{
@@ -21,13 +24,16 @@ public class HomePage extends Application{
     private final TaskPool taskPool;
     private final TaskPoolQuery taskPoolQuery;
     private BorderPane mainPane;
-    private GridPane tasksPane = new GridPane();
+    private GridPane tasksPane;
+    private GridPane filtersPane;
 
     public HomePage(){
         taskPool = new TaskPool();
         taskPool.load();
         taskPoolQuery = new TaskPoolQuery(taskPool);
         mainPane = new BorderPane();
+        tasksPane = new GridPane();
+        filtersPane = new GridPane();
     }
     
     public void start(Stage primaryStage){
@@ -53,7 +59,7 @@ public class HomePage extends Application{
             Stage stage = new Stage();
             rtp.start(stage);
         });
-        settingsButton.setOnMousePressed(e -> {
+	settingsButton.setOnMousePressed(e -> {
             SettingsPage sp = new SettingsPage();
             Stage stage = new Stage();
             sp.start(stage);
@@ -70,18 +76,34 @@ public class HomePage extends Application{
         holdButtonsPane.setRight(buttonsPane);
 
         //Pane for tasks
-        //tasksPane.setAlignment(Pos.CENTER);
-        Label lblHeader = new Label("Tasks");
-        lblHeader.setStyle("-fx-font-weight: bold; -fx-font-size: 40");
+        Label lblTaskHeader = new Label("Tasks");
+        tasksPane.setHalignment(lblTaskHeader, HPos.CENTER);
+        lblTaskHeader.setAlignment(Pos.CENTER);
+        lblTaskHeader.setStyle("-fx-font-weight: bold; -fx-font-size: 40");
+        tasksPane.add(lblTaskHeader, 0, 0);
         
-        tasksPane.add(lblHeader, 0, 0);
+        /*
+        //Pane for filters
+        Label lblFilterHeader = new Label("Filter by");
+        filtersPane.add(lblFilterHeader, 0, 0);
+        filtersPane.setPadding(new Insets(0, 0, 0, 20));
 
+        filtersPane.setVgap(10);
+        Button btDueDate = new Button("Due Date");
+        Button btFilterWeek = new Button("Week");
+        Button btPriority= new Button("Priority");
+        filtersPane.add(btDueDate, 0, 1);
+        filtersPane.add(btFilterWeek, 0, 2);
+        filtersPane.add(btPriority, 0, 3);
+        */
+        
         refresh();
         
         //Add GridPanes to BorderPane
+        //mainPane.setLeft(filtersPane);
         mainPane.setBottom(holdButtonsPane);
                 
-        Scene scene = new Scene(mainPane, 700, 550);
+        Scene scene = new Scene(mainPane, 450, 550);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -90,7 +112,8 @@ public class HomePage extends Application{
         Platform.runLater(() -> {
             TaskPaneGenerator tpg = new TaskPaneGenerator(taskPoolQuery.getTasks(), this::refresh);
             tasksPane.add(tpg.generateTaskPane(), 0, 1);
-            mainPane.setRight(tasksPane);
+            
+            mainPane.setCenter(tasksPane);
         });
     }
     
