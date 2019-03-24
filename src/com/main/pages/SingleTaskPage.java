@@ -11,6 +11,7 @@ import javafx.scene.text.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -71,6 +72,28 @@ public class SingleTaskPage extends Application {
         tfDueDate.setStyle("-fx-border-color: #ffffff; -fx-background-color : rgb(253,255,226); -fx-opacity: 1.0; -fx-border-radius: 5");
         tfDueDate.prefWidthProperty().bind(root.widthProperty().multiply(0.25));
         tfDueDate.setDisable(true);
+        
+        tfDueDate.setOnMousePressed(event -> {
+            DatePicker datePicker = new DatePicker();
+            datePicker.setStyle(" -fx-background-color : rgb(253,255,226)");
+            datePicker.setShowWeekNumbers(false);
+            datePicker.setPromptText("Select Due Date");
+            Scene dateScene = new Scene(datePicker, 300, 200);
+            Stage secondaryStage = new Stage();
+            secondaryStage.setScene(dateScene);
+            secondaryStage.setTitle("Select Due Date");
+            secondaryStage.show();
+            
+            
+            datePicker.setOnAction(e->{
+                t.setDueDate(java.sql.Date.valueOf(datePicker.getValue()));
+            });
+            
+            secondaryStage.setOnCloseRequest(f->{
+                t.setDueDate(java.sql.Date.valueOf(datePicker.getValue()));
+                tfDueDate.setText(t.getDueDate().toString());
+            });
+        });
         tfs.add(tfDueDate);
         hb1.getChildren().addAll(tfTaskName,lDue, tfDueDate);
  
@@ -145,14 +168,13 @@ public class SingleTaskPage extends Application {
         lNotes.setStyle("-fx-border-color: #000000;-fx-border-radius: 7");
 
         
-        TextField tfDisplayNotes = new TextField();
-        tfDisplayNotes.prefWidthProperty().bind(root.widthProperty());
-        tfDisplayNotes.prefHeightProperty().bind(root.heightProperty().multiply(0.25));
-        tfDisplayNotes.setText(t.getNotes());
-        tfDisplayNotes.setAlignment(Pos.TOP_LEFT);
-        tfDisplayNotes.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
-        tfDisplayNotes.setDisable(true);
-        tfs.add(tfDisplayNotes);
+        TextArea taDisplayNotes = new TextArea();
+        taDisplayNotes.prefWidthProperty().bind(root.widthProperty());
+        taDisplayNotes.prefHeightProperty().bind(root.heightProperty().multiply(0.25));
+        taDisplayNotes.setText(t.getNotes());
+        taDisplayNotes.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
+        taDisplayNotes.setDisable(true);
+        taDisplayNotes.setEditable(false);
         
         //Label to display "Attachements"
         Label lAttachments = new Label("Attachments");
@@ -162,19 +184,19 @@ public class SingleTaskPage extends Application {
         lAttachments.setStyle("-fx-border-color: #000000;-fx-border-radius: 7");
        
         
-        TextArea tfAttachments = new TextArea();
-        tfAttachments.prefWidthProperty().bind(root.widthProperty());
-        tfAttachments.prefHeightProperty().bind(root.heightProperty().multiply(0.20));
+        TextArea taAttachments = new TextArea();
+        taAttachments.prefWidthProperty().bind(root.widthProperty());
+        taAttachments.prefHeightProperty().bind(root.heightProperty().multiply(0.22));
         if((t.getAttachedFiles())==null){
-            tfAttachments.setText("No files attached");
+            taAttachments.setText("No files attached");
         }
         else{
-            updateAttachments(tfAttachments);           
+            updateAttachments(taAttachments);           
         }
  
-        tfAttachments.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
-        tfAttachments.setDisable(false);
-        tfAttachments.setEditable(false);
+        taAttachments.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
+        taAttachments.setDisable(false);
+        taAttachments.setEditable(false);
         
         
         //button to add attachments
@@ -193,7 +215,7 @@ public class SingleTaskPage extends Application {
             if(selectedFile != null){
                 t.addAttachedFile(selectedFile);
                 refresher.run();
-                updateAttachments(tfAttachments);
+                updateAttachments(taAttachments);
             }
         });
         
@@ -202,7 +224,7 @@ public class SingleTaskPage extends Application {
         hb3.setSpacing(7);
         
         
-        root.getChildren().addAll(hb1, hb2, lNotes, tfDisplayNotes, hb3, tfAttachments);
+        root.getChildren().addAll(hb1, hb2, lNotes, taDisplayNotes, hb3, taAttachments);
          
         //Display a message and completion Date if task has been completed
         if(t.isCompleted() == true){
@@ -211,6 +233,7 @@ public class SingleTaskPage extends Application {
             lTaskCompleted.setText(message);
             lTaskCompleted.prefWidthProperty().bind(root.widthProperty());
             lTaskCompleted.setFont(Font.font("Consolas", FontWeight.BOLD, 16));
+            lTaskCompleted.prefHeightProperty().bind(root.heightProperty().multiply(0.1));
             lTaskCompleted.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
             root.getChildren().add(lTaskCompleted);
         }
@@ -220,6 +243,11 @@ public class SingleTaskPage extends Application {
         Button bEdit = new Button("Edit");
         bEdit.setFont(Font.font("Consolas", FontWeight.BOLD, 16));
         bEdit.setStyle("-fx-background-color : rgb(253,255,226); -fx-border-color: #000000; -fx-border-radius: 5");
+        
+        bEdit.setOnMousePressed(e->{
+           edit(tfs, taDisplayNotes); 
+        });
+        
         Button bSave = new Button("Save");
         bSave.setFont(Font.font("Consolas", FontWeight.BOLD, 16));
         bSave.setStyle("-fx-background-color : rgb(253,255,226); -fx-border-color: #000000; -fx-border-radius: 5");
@@ -242,11 +270,6 @@ public class SingleTaskPage extends Application {
         BPwrapper.setCenter(root);
         BPwrapper.setBottom(bottomPane);
        
-        
-        
-      
-
-
 
         primaryStage.setTitle(t.getName());
         primaryStage.setScene(new Scene(BPwrapper, 800, 600));
@@ -265,6 +288,19 @@ public class SingleTaskPage extends Application {
             attachedFileNames += (file.getName()+ "\n");
         }
         attachments.setText(attachedFileNames);
+    }
+    
+    public void edit(ArrayList<TextField> tfs, TextArea taDisplayNotes){
+        for (TextField tf : tfs){
+            tf.setDisable(false);
+        }
+        taDisplayNotes.setDisable(false);
+        taDisplayNotes.setEditable(true);   
+    }
+    
+    
+    public void save(){
+        
     }
     
     //TODO add edit button at the bottom
