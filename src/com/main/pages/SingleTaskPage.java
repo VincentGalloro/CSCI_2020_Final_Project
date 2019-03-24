@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -157,7 +158,23 @@ public class SingleTaskPage extends Application {
         lAttachments.setPadding(new Insets(5,5,5,5));
         lAttachments.setStyle("-fx-border-color: black;");
         lAttachments.setStyle("-fx-border-color: #000000;-fx-border-radius: 7");
-       //button to add attachments
+       
+        
+        TextArea tfAttachments = new TextArea();
+        tfAttachments.prefWidthProperty().bind(root.widthProperty());
+        tfAttachments.prefHeightProperty().bind(root.heightProperty().multiply(0.20));
+        if((t.getAttachedFiles())==null){
+            tfAttachments.setText("No files attached");
+        }
+        else{
+            updateAttachments(tfAttachments);           
+        }
+ 
+        tfAttachments.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
+        tfAttachments.setDisable(false);
+        
+        
+        //button to add attachments
         ImageView iAddAttachment = new ImageView("file:images/plus1.png");
         Button bAdd = new Button();
         iAddAttachment.setFitWidth(20);
@@ -172,6 +189,7 @@ public class SingleTaskPage extends Application {
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
             if(selectedFile != null){
                 t.addAttachedFile(selectedFile);
+                updateAttachments(tfAttachments);
             }
         });
         
@@ -179,23 +197,6 @@ public class SingleTaskPage extends Application {
         hb3.setPadding(new Insets(5, 5, 5, 5));
         hb3.setSpacing(7);
         
-        TextField tfAttachments = new TextField();
-        tfAttachments.prefWidthProperty().bind(root.widthProperty());
-        tfAttachments.prefHeightProperty().bind(root.heightProperty().multiply(0.20));
-        if((t.getAttachedFiles())==null){
-            tfAttachments.setText("No files attached");
-        }
-        else{
-            
-           for (File file : t.getAttachedFiles()){
- 
-              attachmentNames += (file.getName() +   "     |     ");
-           }           tfAttachments.setText(attachmentNames);
-        }
-        tfAttachments.setAlignment(Pos.TOP_LEFT);
-        tfAttachments.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
-        tfAttachments.setDisable(true);
-        tfs.add(tfAttachments);
         
         root.getChildren().addAll(hb1, hb2, lNotes, tfDisplayNotes, hb3, tfAttachments);
          
@@ -211,13 +212,7 @@ public class SingleTaskPage extends Application {
         }
         
         
-       
-        
-        
-        //refresher.run();
-        
-        
-
+      
 
 
 
@@ -226,18 +221,20 @@ public class SingleTaskPage extends Application {
         primaryStage.show();
     }
     
-//    public void refresh(){
-//        
-//    }
-//    
+    
     public void updateBPriority(Button bPriority){
         bPriority.setText("This task is of "+ t.getPriority().toString() + " priority");
         bPriority.setTextFill(t.getPriority().color);
     }
     
-    //TODO add refresh when submit is pressed in task priority
-    //TODO add refresh when file chooser is closed
-    //TODO add message if task has been completed
+    public void updateAttachments(TextArea attachments){
+        String attachedFileNames= "";
+        for(File file : t.getAttachedFiles()){
+            attachedFileNames += (file.getName()+ "\n");
+        }
+        attachments.setText(attachedFileNames);
+    }
+    
     //TODO add edit button at the bottom
     
 
