@@ -33,6 +33,7 @@ public class SingleTaskPage extends Application {
     private String pattern = "yyyy-MM-dd";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     
+    //constructor
     public SingleTaskPage(Task task, Runnable refresher){
         t = task;
         this.refresher = refresher;
@@ -62,7 +63,7 @@ public class SingleTaskPage extends Application {
         tfTaskName.setDisable(true);
         tfs.add(tfTaskName);
 
-        //Label to display the due date
+        //Label to display the text : Due
         Label lDue = new Label("DUE: ");
         lDue.setFont(Font.font("Consolas", FontWeight.BOLD, 16));
         lDue.setAlignment(Pos.BOTTOM_RIGHT);
@@ -76,6 +77,7 @@ public class SingleTaskPage extends Application {
         tfDueDate.prefWidthProperty().bind(root.widthProperty().multiply(0.25));
         tfDueDate.setDisable(true);
         
+        //allows the user to change the edit due date when clicked in edit mode
         tfDueDate.setOnMousePressed(event -> {
             DatePicker datePicker = new DatePicker();
             datePicker.setStyle(" -fx-background-color : rgb(253,255,226)");
@@ -94,7 +96,7 @@ public class SingleTaskPage extends Application {
             });
             
             secondaryStage.setOnCloseRequest(f->{
-                t.setDueDate(java.sql.Date.valueOf(datePicker.getValue()));
+                //t.setDueDate(java.sql.Date.valueOf(datePicker.getValue()));
                 tfDueDate.setText(t.getDueDate().toString());
             });
         });
@@ -111,7 +113,7 @@ public class SingleTaskPage extends Application {
         bPriority.setStyle("-fx-border-color: rgb(253,255,226); -fx-background-color : rgb(253,255,226); -fx-opacity: 1.0; -fx-border-radius: 5");
         bPriority.setFont(Font.font("Consolas", FontWeight.SEMI_BOLD, 16));
         
-        //adding edit(pencil) imagee to the button
+        //adding image to the button
         ImageView IeditDueIn = new ImageView("file:images/ud2.png");
         IeditDueIn.setFitWidth(20);
         IeditDueIn.setFitHeight(bPriority.getHeight());
@@ -120,11 +122,8 @@ public class SingleTaskPage extends Application {
         bEditDueIn.setGraphic(IeditDueIn);
         bEditDueIn.setStyle("-fx-background-color : rgb(253,255,226); -fx-border-color: #000000");
         
-        
+        //user can change the priority of the task when button is pressed
         bEditDueIn.setOnMousePressed(e->{
-            
-        //adding choice box to display choicbox to change the priority of the task
-
             VBox choicePane = new VBox(10);
             choicePane.setPadding(new Insets(5,5,5,5));
             choicePane.setStyle("-fx-background-color: rgb(105,202,42)");
@@ -177,7 +176,7 @@ public class SingleTaskPage extends Application {
         taDisplayNotes.prefHeightProperty().bind(root.heightProperty().multiply(0.25));
         taDisplayNotes.setText(t.getNotes());
         taDisplayNotes.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
-        taDisplayNotes.setDisable(true);
+        taDisplayNotes.setDisable(false);
         taDisplayNotes.setEditable(false);
         
         //Label to display "Attachements"
@@ -187,7 +186,7 @@ public class SingleTaskPage extends Application {
         lAttachments.setStyle("-fx-border-color: black;");
         lAttachments.setStyle("-fx-border-color: #000000;-fx-border-radius: 7");
        
-        
+        //Text area to view names of attached Files
         TextArea taAttachments = new TextArea();
         taAttachments.prefWidthProperty().bind(root.widthProperty());
         taAttachments.prefHeightProperty().bind(root.heightProperty().multiply(0.22));
@@ -212,6 +211,7 @@ public class SingleTaskPage extends Application {
         bAdd.setGraphic(iAddAttachment);
         bAdd.setStyle("-fx-background-color : rgb(253,255,226); -fx-border-color: #000000; -fx-border-radius: 7");
         
+        //launches file chooser to add attachments
         bAdd.setOnMousePressed(e->{
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Add attachment");
@@ -242,12 +242,25 @@ public class SingleTaskPage extends Application {
             root.getChildren().add(lTaskCompleted);
         }
         
+        //Display a message if a task is past its due date
+        if(isPastDueDate(t.getDueDate()) == true){
+            Label lPastDueDate = new Label();
+            String message = "This task is past it's due date of : " + simpleDateFormat.format(t.getDueDate());
+            lPastDueDate.setText(message);
+            lPastDueDate.prefWidthProperty().bind(root.widthProperty());
+            lPastDueDate.setFont(Font.font("Consolas", FontWeight.BOLD, 16));
+            lPastDueDate.prefHeightProperty().bind(root.heightProperty().multiply(0.1));
+            lPastDueDate.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
+            root.getChildren().add(lPastDueDate);
+        }
+        
         
         //Adding the edit and save button 
         Button bEdit = new Button("Edit");
         bEdit.setFont(Font.font("Consolas", FontWeight.BOLD, 16));
         bEdit.setStyle("-fx-background-color : rgb(253,255,226); -fx-border-color: #000000; -fx-border-radius: 5");
         
+        //launch edit mode when pressed
         bEdit.setOnMousePressed(e->{
            edit(tfs, taDisplayNotes); 
         });
@@ -257,7 +270,7 @@ public class SingleTaskPage extends Application {
         bSave.setStyle("-fx-background-color : rgb(253,255,226); -fx-border-color: #000000; -fx-border-radius: 5");
         
         bSave.setOnMousePressed(e->{
-           save(tfTaskName, tfDueDate, taDisplayNotes); 
+           save(primaryStage, tfTaskName, tfDueDate, taDisplayNotes); 
         });
         
         //Adding edit and save buttons to Hbox
@@ -285,11 +298,13 @@ public class SingleTaskPage extends Application {
     }
     
     
+    //updates color and text according to priority of the task
     public void updateBPriority(Button bPriority){
         bPriority.setText("This task is of "+ t.getPriority().toString() + " priority");
         bPriority.setTextFill(t.getPriority().color);
     }
     
+    //updates the text area for attachments when new files are attached
     public void updateAttachments(TextArea attachments){
         String attachedFileNames= "";
         for(File file : t.getAttachedFiles()){
@@ -298,6 +313,8 @@ public class SingleTaskPage extends Application {
         attachments.setText(attachedFileNames);
     }
     
+    
+    //launches edit mode; user can now edit notes all the text fields
     public void edit(ArrayList<TextField> tfs, TextArea taDisplayNotes){
         for (TextField tf : tfs){
             tf.setDisable(false);
@@ -306,26 +323,28 @@ public class SingleTaskPage extends Application {
         taDisplayNotes.setEditable(true);   
     }
     
-    
-    public void save(TextField TaskName, TextField dueDate, TextArea taDisplayNotes){
+    //this function saves the changes made by the user in edit mode
+    public void save(Stage stage, TextField TaskName, TextField dueDate, TextArea taDisplayNotes){
         t.setTaskName(TaskName.getText());
-        TaskName.setText(t.getName());
+        TaskName.setDisable(true);
         
         dueDate.setDisable(true);
         
         t.setNotes(taDisplayNotes.getText());
         taDisplayNotes.setText(t.getNotes());
         taDisplayNotes.setEditable(false);
-        taDisplayNotes.setDisable(true);
+        //taDisplayNotes.setDisable(true);
         refresher.run();
+        stage.close();
     }
     
-    //TODO add edit button at the bottom
+    public boolean isPastDueDate(Date dueDate){
+        boolean pastDueDate = false;
+        Date currentDate = new Date();
+        if(currentDate.compareTo(dueDate)>0){
+            pastDueDate = true;
+        }
+        return pastDueDate;
+    }
     
-
-
-    /*
-    public static void main(String[] args) {
-        launch(args);
-    }*/
 }
