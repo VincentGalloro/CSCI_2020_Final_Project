@@ -243,14 +243,14 @@ public class SingleTaskPage extends Application {
         }
         
         //Display a message if a task is past its due date
-        if(isPastDueDate(t.getDueDate()) == true){
+        if(isPastDueDate(t.getDueDate()) == true && !t.isCompleted()){
             Label lPastDueDate = new Label();
-            String message = "This task is past it's due date of : " + simpleDateFormat.format(t.getDueDate());
+            String message = " This task is past its due date of : " + simpleDateFormat.format(t.getDueDate());
             lPastDueDate.setText(message);
             lPastDueDate.prefWidthProperty().bind(root.widthProperty());
             lPastDueDate.setFont(Font.font("Consolas", FontWeight.BOLD, 16));
             lPastDueDate.prefHeightProperty().bind(root.heightProperty().multiply(0.1));
-            lPastDueDate.setStyle("-fx-border-color: #000000; -fx-background-color: rgb(209,193,245);  -fx-opacity: 1.0");
+            lPastDueDate.setStyle("-fx-border-color: #000000; -fx-background-color: rgba(224,9,0,0.87);  -fx-opacity: 1.0");
             root.getChildren().add(lPastDueDate);
         }
         
@@ -338,6 +338,7 @@ public class SingleTaskPage extends Application {
         stage.close();
     }
     
+   //function to check if a task is past its due date
     public boolean isPastDueDate(Date dueDate){
         boolean pastDueDate = false;
         Date currentDate = new Date();
