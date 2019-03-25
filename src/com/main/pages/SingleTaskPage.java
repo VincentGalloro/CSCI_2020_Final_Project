@@ -3,6 +3,7 @@ import com.main.Task;
 import com.main.TaskPriority;
 import java.util.ArrayList;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -29,6 +30,8 @@ public class SingleTaskPage extends Application {
     private Runnable refresher;
     private ArrayList<TextField> tfs = new ArrayList<>() ;
     private String attachmentNames = "";
+    private String pattern = "yyyy-MM-dd";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     
     public SingleTaskPage(Task task, Runnable refresher){
         t = task;
@@ -67,7 +70,7 @@ public class SingleTaskPage extends Application {
         lDue.prefWidthProperty().bind(root.widthProperty().multiply(0.15));
 
         //textField to display the due date
-        TextField tfDueDate = new TextField(String.valueOf(t.getDueDate()));
+        TextField tfDueDate = new TextField(simpleDateFormat.format(t.getDueDate()));
         tfDueDate.setFont(Font.font("Consolas", FontWeight.SEMI_BOLD, 16));
         tfDueDate.setStyle("-fx-border-color: #ffffff; -fx-background-color : rgb(253,255,226); -fx-opacity: 1.0; -fx-border-radius: 5");
         tfDueDate.prefWidthProperty().bind(root.widthProperty().multiply(0.25));
@@ -86,7 +89,8 @@ public class SingleTaskPage extends Application {
             
             
             datePicker.setOnAction(e->{
-                t.setDueDate(java.sql.Date.valueOf(datePicker.getValue()));
+                Date date =  java.sql.Date.valueOf(datePicker.getValue());
+                t.setDueDate(date);
             });
             
             secondaryStage.setOnCloseRequest(f->{
@@ -108,7 +112,7 @@ public class SingleTaskPage extends Application {
         bPriority.setFont(Font.font("Consolas", FontWeight.SEMI_BOLD, 16));
         
         //adding edit(pencil) imagee to the button
-        ImageView IeditDueIn = new ImageView("file:images/pencil2.png");
+        ImageView IeditDueIn = new ImageView("file:images/ud2.png");
         IeditDueIn.setFitWidth(20);
         IeditDueIn.setFitHeight(bPriority.getHeight());
         IeditDueIn.setPreserveRatio(true);
@@ -229,7 +233,7 @@ public class SingleTaskPage extends Application {
         //Display a message and completion Date if task has been completed
         if(t.isCompleted() == true){
             Label lTaskCompleted = new Label();
-            String message = "This task was completed on " + t.getCompletionDate();
+            String message = "This task was completed on " + simpleDateFormat.format(t.getCompletionDate());
             lTaskCompleted.setText(message);
             lTaskCompleted.prefWidthProperty().bind(root.widthProperty());
             lTaskCompleted.setFont(Font.font("Consolas", FontWeight.BOLD, 16));
