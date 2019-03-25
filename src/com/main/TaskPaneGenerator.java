@@ -3,19 +3,15 @@ package com.main;
 import com.main.pages.SingleTaskPage;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -74,15 +70,9 @@ public class TaskPaneGenerator {
         vBox.getChildren().addAll(lblTaskName, lblDueDate);
         hBox.getChildren().addAll(vBox, btEdit, taskState);
         hBox.setAlignment(Pos.CENTER);
-        if (t.getPriority() == TaskPriority.LOW){
-            hBox.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: GREENYELLOW");
-        }
-        else if (t.getPriority() == TaskPriority.MEDIUM){
-            hBox.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: YELLOW");
-        }
-        else {
-            hBox.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: RED");
-        }
+        String color = t.getPriority().cName;
+        hBox.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: "+color);
+        
         return hBox;
     }
     
@@ -104,7 +94,14 @@ public class TaskPaneGenerator {
                 System.out.println("checked");
                 t.completeTask();
             }
-
+            new Thread(() -> {
+                try {
+                    Thread.sleep(500);
+                    refresher.run();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(TaskPaneGenerator.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }).start();
         });
     }
 }

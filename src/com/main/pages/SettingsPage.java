@@ -6,6 +6,8 @@ import com.main.filters.CompletedFilter;
 import com.main.filters.DateFilter;
 import com.main.filters.Filter;
 import com.main.filters.PriorityFilter;
+import com.main.sorters.DateSorter;
+import com.main.sorters.PrioritySorter;
 import java.util.Date;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,6 +40,12 @@ public class SettingsPage {
         l.setAlignment(Pos.CENTER);
         l.setStyle("-fx-font-weight: bold; -fx-font-size: 25");
         filtersPane.add(l, 1, 0);
+        
+        Label l2 = new Label("Sort by:");
+        l2.setPrefWidth(200);
+        l2.setAlignment(Pos.CENTER);
+        l2.setStyle("-fx-font-weight: bold; -fx-font-size: 25");
+        filtersPane.add(l2, 1, 4);
 
         //Set filter buttons
         Button btHighPriority = new Button("High Priority");
@@ -62,8 +70,16 @@ public class SettingsPage {
         filtersPane.add(btUncompleted, 1, 2);
         filtersPane.add(btDate, 2, 2);
         filtersPane.add(btViewAll, 1, 3);
-
-        Scene scene = new Scene(filtersPane, 500, 190);
+        
+        Button btDateSort = new Button("Due Date");
+        btDateSort.setPrefWidth(225);
+        Button btPrioritySort = new Button("Priority");
+        btPrioritySort.setPrefWidth(225);
+        
+        filtersPane.add(btDateSort, 0, 5);
+        filtersPane.add(btPrioritySort, 1, 5);
+        
+        Scene scene = new Scene(filtersPane, 500, 400);
         stage.setScene(scene);
         stage.show();
         
@@ -94,6 +110,17 @@ public class SettingsPage {
         });
         btViewAll.setOnMousePressed(e ->{
             TPQ.clearFilters();
+            refresher.run();
+            stage.close();
+        });
+        
+        btDateSort.setOnMousePressed(e ->{
+            TPQ.setSorter(new DateSorter());
+            refresher.run();
+            stage.close();
+        });
+        btPrioritySort.setOnMousePressed(e ->{
+            TPQ.setSorter(new PrioritySorter());
             refresher.run();
             stage.close();
         });
