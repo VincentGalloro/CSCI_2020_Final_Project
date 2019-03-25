@@ -8,6 +8,7 @@ import com.main.filters.Filter;
 import com.main.filters.PriorityFilter;
 import java.util.Date;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,13 +28,16 @@ public class SettingsPage {
     }
     
     public void start(Stage stage){ 
+        filtersPane.setStyle("-fx-background-color: 	CORNFLOWERBLUE");
         filtersPane.setPadding(new Insets(10, 10, 10, 10));
         filtersPane.setHgap(10);
         filtersPane.setVgap(10);
         
         Label l = new Label("Filter by:");
-        l.setStyle("-fx-font-weight: bold; -fx-font-size: 20");
-        filtersPane.add(l, 0, 0);
+        l.setPrefWidth(200);
+        l.setAlignment(Pos.CENTER);
+        l.setStyle("-fx-font-weight: bold; -fx-font-size: 25");
+        filtersPane.add(l, 1, 0);
 
         //Set filter buttons
         Button btHighPriority = new Button("High Priority");
@@ -48,16 +52,18 @@ public class SettingsPage {
         btUncompleted.setPrefWidth(225);
         Button btDate= new Button("Date");
         btDate.setPrefWidth(225);
+        Button btViewAll = new Button("View All");
+        btViewAll.setPrefWidth(225);
         
-
         filtersPane.add(btHighPriority, 0, 1);
         filtersPane.add(btMediumPriority, 1, 1);
         filtersPane.add(btLowPriority, 2, 1);
         filtersPane.add(btCompleted, 0, 2);
         filtersPane.add(btUncompleted, 1, 2);
         filtersPane.add(btDate, 2, 2);
+        filtersPane.add(btViewAll, 1, 3);
 
-        Scene scene = new Scene(filtersPane, 500, 150);
+        Scene scene = new Scene(filtersPane, 500, 190);
         stage.setScene(scene);
         stage.show();
         
@@ -84,6 +90,11 @@ public class SettingsPage {
         });
         btDate.setOnMousePressed(e ->{
             applyFilter(new DateFilter(new Date()));
+            stage.close();
+        });
+        btViewAll.setOnMousePressed(e ->{
+            TPQ.clearFilters();
+            refresher.run();
             stage.close();
         });
     }
