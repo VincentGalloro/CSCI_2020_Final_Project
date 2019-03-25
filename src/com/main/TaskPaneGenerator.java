@@ -1,6 +1,7 @@
 package com.main;
 
 import com.main.pages.SingleTaskPage;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -51,16 +52,19 @@ public class TaskPaneGenerator {
     
     public HBox generateSingleTaskPane(Task t){
         HBox hBox = new HBox();
-        hBox.setSpacing(10);
+        hBox.setSpacing(30);
         VBox vBox = new VBox();
         vBox.setPadding(new Insets(5, 5, 5, 5));
         Label lblTaskName = new Label("Task: " + t.getName());
         lblTaskName.setStyle("-fx-font-weight: bold");
-        lblTaskName.setMinWidth(300);
-        lblTaskName.setMaxWidth(300);
-        Label lblDueDate = new Label("Due date: " + t.getDueDate());
-        lblDueDate.setMaxWidth(300);
-        lblDueDate.setMinWidth(300);
+        lblTaskName.setMinWidth(200);
+        lblTaskName.setMaxWidth(200);
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(t.getDueDate());
+        Label lblDueDate = new Label("Due date: " + date);
+        lblDueDate.setMaxWidth(200);
+        lblDueDate.setMinWidth(200);
         lblDueDate.setStyle("-fx-font-weight: bold");
         Button btEdit = new Button("Edit");
         linkEditButton(t, btEdit);

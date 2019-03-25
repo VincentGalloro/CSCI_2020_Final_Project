@@ -57,30 +57,35 @@ public class SettingsPage {
         filtersPane.add(btUncompleted, 1, 2);
         filtersPane.add(btDate, 2, 2);
 
+        Scene scene = new Scene(filtersPane, 500, 150);
+        stage.setScene(scene);
+        stage.show();
         
         //Set functionality for each filter
         btLowPriority.setOnMousePressed(e ->{
             applyFilter(new PriorityFilter(TaskPriority.LOW));
+            stage.close();
         });
         btMediumPriority.setOnMousePressed(e ->{
             applyFilter(new PriorityFilter(TaskPriority.MEDIUM));
+            stage.close();
         });        
         btHighPriority.setOnMousePressed(e ->{
             applyFilter(new PriorityFilter(TaskPriority.HIGH));
+            stage.close();
         });
         btCompleted.setOnMousePressed(e ->{
             applyFilter(new CompletedFilter(true));
+            stage.close();
         });
         btUncompleted.setOnMousePressed(e ->{
             applyFilter(new CompletedFilter(false));
+            stage.close();
         });
         btDate.setOnMousePressed(e ->{
             applyFilter(new DateFilter(new Date()));
+            stage.close();
         });
-        
-        Scene scene = new Scene(filtersPane, 500, 150);
-        stage.setScene(scene);
-        stage.show();
     }
     
     public void applyFilter(Filter f){        

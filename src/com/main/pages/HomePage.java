@@ -42,7 +42,7 @@ public class HomePage{
         BorderPane holdButtonsPane = new BorderPane();
         Button btSendTask = new Button("Send Friend Task");
         Button btReceiveTask = new Button("Receive Friend Task");
-        ImageView settingsButton = new ImageView(new Image("file:images/settingsButton.png"));
+        ImageView settingsButton = new ImageView(new Image("file:images/settingsButton2.png"));
         ImageView addTaskButton = new ImageView(new Image("file:images/addTaskButton.png"));
         
         addTaskButton.setOnMousePressed(e -> {
