@@ -12,9 +12,9 @@ Usernames:
 - Vincent Galloro -> VincentGalloro
 
 Contributions:
-Aabid Mitha : HomePage GUI, Generating Tasks, Edit Page, Filtering Tasks
-Pulkit Madan: SingleTaskPage GUI, Editing Tasks, File IO
-Vincent Galloro: Login Page, Sharing tasks, Sorting Tasks, File/Task IO, Integration
+- Aabid Mitha : HomePage GUI, Generating Tasks, Edit Page, Filtering Tasks
+- Pulkit Madan: SingleTaskPage GUI, Editing Tasks, File IO
+- Vincent Galloro: Login Page, Sharing tasks, Sorting Tasks, File/Task IO, Integration
 
 
 # Section 2:
