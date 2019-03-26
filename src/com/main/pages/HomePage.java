@@ -17,7 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-
+//This class displays the GUI for the homepage of the app
 public class HomePage{
     
     private final String name;
@@ -25,7 +25,6 @@ public class HomePage{
     private final TaskPoolQuery taskPoolQuery;
     private BorderPane mainPane;
     private GridPane tasksPane;
-    private GridPane filtersPane;
 
     public HomePage(String name){
         this.name = name;
@@ -34,17 +33,17 @@ public class HomePage{
         taskPoolQuery = new TaskPoolQuery(taskPool);
         mainPane = new BorderPane();
         tasksPane = new GridPane();
-        //filtersPane = new GridPane();
     }
     
     public void start(Stage primaryStage){
-        //Pane that holds the pane for buttons
+        //This pane holds the pane for buttons
         BorderPane holdButtonsPane = new BorderPane();
         Button btSendTask = new Button("Send Friend Task");
         Button btReceiveTask = new Button("Receive Friend Task");
         ImageView settingsButton = new ImageView(new Image("file:images/settingsButton2.png"));
         ImageView addTaskButton = new ImageView(new Image("file:images/addTaskButton.png"));
         
+        //These buttons deal with the fuctionality of each main task featues
         addTaskButton.setOnMousePressed(e -> {
             CreateTaskPage ctp = new CreateTaskPage(taskPool, this::refresh);  
             Stage stage = new Stage();
@@ -66,7 +65,7 @@ public class HomePage{
             sp.start(stage);
         });
         
-        //Pane that has the settings and add new task buttons
+        //This pane has the settings and add new task buttons
         GridPane buttonsPane = new GridPane(); 
         buttonsPane.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
         buttonsPane.setHgap(10);
@@ -76,7 +75,7 @@ public class HomePage{
         buttonsPane.add(addTaskButton, 3, 0);
         holdButtonsPane.setRight(buttonsPane);
 
-        //Pane for tasks
+        //This is the pane to hold tasks
         Label lblTaskHeader = new Label("Tasks ("+name+")");
         tasksPane.setHalignment(lblTaskHeader, HPos.CENTER);
         lblTaskHeader.setAlignment(Pos.CENTER);
@@ -86,7 +85,6 @@ public class HomePage{
         refresh();
         
         //Add GridPanes to BorderPane
-        //mainPane.setLeft(filtersPane);
         mainPane.setBottom(holdButtonsPane);
                 
         Scene scene = new Scene(mainPane, 450, 550);
@@ -94,6 +92,7 @@ public class HomePage{
         primaryStage.show();
     }
 
+    //This function updates the GUI everytime a task has a change in any state
     public void refresh(){
         Platform.runLater(() -> {
             TaskPaneGenerator tpg = new TaskPaneGenerator(taskPoolQuery.getTasks(), this::refresh);
@@ -102,6 +101,7 @@ public class HomePage{
         });
     }
     
+    //This function saves the current tasks to the disk
     public void stop(){
         taskPool.save();
     }

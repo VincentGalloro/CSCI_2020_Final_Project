@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+//This class generates the pane that will display all the tasks on the homepage
 public class TaskPaneGenerator {
     
     private ArrayList<Task> tasks;
@@ -25,32 +26,33 @@ public class TaskPaneGenerator {
         this.refresher = refresher;
     }
     
+    //this function returns the list of tasks in a scrollpane
     public ScrollPane generateTaskPane(){
-        //aabid implement this function!!
-        //you can change pane to a more relevant type if you want
         ScrollPane paneGenerator = new ScrollPane();
         paneGenerator.setFitToWidth(true);
 
         paneGenerator.setPadding(new Insets(15, 15, 15, 15));
 
-        VBox vBox = new VBox();
-        vBox.setSpacing(20);
-        vBox.setPrefWidth(410);
+        VBox verticalList = new VBox();
+        verticalList.setSpacing(20);
+        verticalList.setPrefWidth(410);
 
-        //Add each task to pane
+        //Adds each task to the vertical task list
         for(Task t: tasks){
-            vBox.getChildren().add(generateSingleTaskPane(t));
+            verticalList.getChildren().add(generateSingleTaskPane(t));
         }
-        paneGenerator.setContent(vBox);
+        paneGenerator.setContent(verticalList);
 
-        return paneGenerator; //also change this line
+        return paneGenerator;
     }
     
+    //This function returns a single task including the name of the task, due
+    //date, and buttons to customize
     public HBox generateSingleTaskPane(Task t){
-        HBox hBox = new HBox();
-        hBox.setSpacing(30);
-        VBox vBox = new VBox();
-        vBox.setPadding(new Insets(5, 5, 5, 5));
+        HBox singleTask = new HBox();
+        singleTask.setSpacing(30);
+        VBox taskDetails = new VBox();
+        taskDetails.setPadding(new Insets(5, 5, 5, 5));
         Label lblTaskName = new Label("Task: " + t.getName());
         lblTaskName.setStyle("-fx-font-weight: bold");
         lblTaskName.setMinWidth(200);
@@ -67,15 +69,16 @@ public class TaskPaneGenerator {
         CheckBox taskState = new CheckBox("");
         taskState.setSelected(t.isCompleted());
         linkTaskStateCB(t, taskState);
-        vBox.getChildren().addAll(lblTaskName, lblDueDate);
-        hBox.getChildren().addAll(vBox, btEdit, taskState);
-        hBox.setAlignment(Pos.CENTER);
+        taskDetails.getChildren().addAll(lblTaskName, lblDueDate);
+        singleTask.getChildren().addAll(taskDetails, btEdit, taskState);
+        singleTask.setAlignment(Pos.CENTER);
         String color = t.getPriority().cName;
-        hBox.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: "+color);
+        singleTask.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: "+color);
         
-        return hBox;
+        return singleTask;
     }
     
+    //This function links the edit button to the edit window
     public void linkEditButton(Task t, Button btEdit){
         btEdit.setOnMousePressed(e -> {
             SingleTaskPage dtp = new SingleTaskPage(t, refresher);  
@@ -84,6 +87,7 @@ public class TaskPaneGenerator {
         });
     }
     
+    //This function links the task completion checkboxes with the state of the task
     public void linkTaskStateCB(Task t, CheckBox taskState){
         taskState.setOnMousePressed(e -> {
             if(taskState.isSelected()){

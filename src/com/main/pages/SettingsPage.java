@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+//This class displayes the settings page that has filters and sorts
 public class SettingsPage {
     
     private GridPane filtersPane;
@@ -35,19 +36,19 @@ public class SettingsPage {
         filtersPane.setHgap(10);
         filtersPane.setVgap(10);
         
-        Label l = new Label("Filter by:");
-        l.setPrefWidth(200);
-        l.setAlignment(Pos.CENTER);
-        l.setStyle("-fx-font-weight: bold; -fx-font-size: 25");
-        filtersPane.add(l, 1, 0);
+        Label filterLabel = new Label("Filter by:");
+        filterLabel.setPrefWidth(200);
+        filterLabel.setAlignment(Pos.CENTER);
+        filterLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 25");
+        filtersPane.add(filterLabel, 1, 0);
         
-        Label l2 = new Label("Sort by:");
-        l2.setPrefWidth(200);
-        l2.setAlignment(Pos.CENTER);
-        l2.setStyle("-fx-font-weight: bold; -fx-font-size: 25");
-        filtersPane.add(l2, 1, 4);
+        Label sortLabel = new Label("Sort by:");
+        sortLabel.setPrefWidth(200);
+        sortLabel.setAlignment(Pos.CENTER);
+        sortLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 25");
+        filtersPane.add(sortLabel, 1, 4);
 
-        //Set filter buttons
+        //These lines define the filter buttons
         Button btHighPriority = new Button("High Priority");
         btHighPriority.setPrefWidth(225);
         Button btMediumPriority = new Button("Medium Priority");
@@ -63,19 +64,22 @@ public class SettingsPage {
         Button btViewAll = new Button("View All");
         btViewAll.setPrefWidth(225);
         
+        //Adds the filter buttons to the pane
         filtersPane.add(btHighPriority, 0, 1);
         filtersPane.add(btMediumPriority, 1, 1);
         filtersPane.add(btLowPriority, 2, 1);
         filtersPane.add(btCompleted, 0, 2);
         filtersPane.add(btUncompleted, 1, 2);
         filtersPane.add(btDate, 2, 2);
-        filtersPane.add(btViewAll, 1, 3);
+        filtersPane.add(btViewAll, 0, 3);
         
+        //These lines define the sort buttons
         Button btDateSort = new Button("Due Date");
         btDateSort.setPrefWidth(225);
         Button btPrioritySort = new Button("Priority");
         btPrioritySort.setPrefWidth(225);
         
+        //Adds the sort buttons to the pane
         filtersPane.add(btDateSort, 0, 5);
         filtersPane.add(btPrioritySort, 1, 5);
         
@@ -83,7 +87,7 @@ public class SettingsPage {
         stage.setScene(scene);
         stage.show();
         
-        //Set functionality for each filter
+        //Set functionality for each filter and sorter
         btLowPriority.setOnMousePressed(e ->{
             applyFilter(new PriorityFilter(TaskPriority.LOW));
             stage.close();
@@ -126,6 +130,7 @@ public class SettingsPage {
         });
     }
     
+    //This function applies the filter to the tasks once a filter button is pressed
     public void applyFilter(Filter f){        
         TPQ.clearFilters();
         TPQ.addFilter(f);
