@@ -20,6 +20,8 @@ Contributions:
 # Section 2:
 Repository URL:
 https://github.com/VincentGalloro/CSCI_2020_Final_Project
+Slides URL:
+https://docs.google.com/presentation/d/1gdTQBfqUEoSR3q2r2OXdkeceCyZ1X-HvNeMmIucefVg/edit?usp=sharing
 
 
 # Section 3:
