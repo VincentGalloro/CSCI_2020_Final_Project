@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+//this page displays a text area and runs the server socket
 public class SendTaskPage{
 
     private TextArea area;
@@ -19,6 +20,7 @@ public class SendTaskPage{
         client = new TaskClient(name, tasks, this::writeLine);
     }
     
+    //set up the UI
     public void start(Stage stage){
         Pane pane = new Pane();
         
@@ -34,11 +36,8 @@ public class SendTaskPage{
         new Thread(client).start();
     }
     
+    //allow a line to be written to the text area
     public void writeLine(String s){
         Platform.runLater(() -> area.setText(area.getText() + s + "\n"));
     }
-    
-    /*public static void main(String[] args){
-        Application.launch(args);
-    }*/
 }

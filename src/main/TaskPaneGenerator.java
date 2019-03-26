@@ -98,6 +98,8 @@ public class TaskPaneGenerator {
                 System.out.println("checked");
                 t.completeTask();
             }
+            //when a task's completed status is updated, we need to refresh the main pane
+            //we do this on a 500 millisecond delay so the task lingers aroudn on the page
             new Thread(() -> {
                 try {
                     Thread.sleep(500);

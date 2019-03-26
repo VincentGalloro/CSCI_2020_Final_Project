@@ -2,6 +2,8 @@
 package main;
 
 import javafx.scene.paint.Color;
+
+//enum for a tasks priority level
 public enum TaskPriority {
     LOW (Color.GREEN, "GREENYELLOW"),
     MEDIUM (Color.BLUE, "YELLOW"),

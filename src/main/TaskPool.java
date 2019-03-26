@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+//this class stores every current task, it is the central point for task storage
+//this includes completed and uncompleted tasks
 public class TaskPool {
     
     private final String name;
@@ -23,6 +25,7 @@ public class TaskPool {
         tasks = new ArrayList<>();
     }
     
+    //write all of the tasks to a save file based on the username entered
     public void save(){
         try {
             DataOutputStream fout = new DataOutputStream(new FileOutputStream(new File("tasks_"+name+".txt")));
@@ -32,6 +35,7 @@ public class TaskPool {
         } catch (FileNotFoundException ex) {
         } catch (IOException ex) {}
     }
+    //load all of the tasks from a file based on the username enterd
     public void load(){
         File f = new File("tasks_"+name+".txt");
         if(!f.exists()){ return; }
@@ -48,7 +52,9 @@ public class TaskPool {
         } catch (IOException ex) {}
     }
     
+    //adder function
     public void addTask(Task t){ tasks.add(t); }
     
+    //returns a stream of tasks
     public Stream<Task> getTasks(){ return tasks.stream(); }
 }

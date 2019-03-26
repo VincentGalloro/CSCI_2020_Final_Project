@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+//this class uses file IO, can read a task object from a stream, either file or socket
 public class TaskReader {
     
     private DataInputStream in;
@@ -19,6 +20,8 @@ public class TaskReader {
         this.in = in;
     }
     
+    //read in all of the attributes of the task one by one and initialize the object
+    //it's important that the order of these do not change
     public Task loadTask(){
         try {
             Task t = new Task(in.readUTF());

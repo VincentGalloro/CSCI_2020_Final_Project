@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+//the login page is the starting point of the program
 public class LoginPage extends Application{
     
     private TextField nameField;
@@ -23,6 +24,7 @@ public class LoginPage extends Application{
         this.nameField = new TextField();
     }
     
+    //set up the UI
     public void start(Stage stage){
         StackPane pane = new StackPane();
         
@@ -33,6 +35,7 @@ public class LoginPage extends Application{
         nameField.setFont(Font.font(20));
         nameField.setPrefColumnCount(14);
         
+        //when login is clicked, or enter is pressed, call the login function
         b.setOnMouseClicked(e -> login(stage));
         nameField.setOnKeyPressed(e -> { if(e.getCode()==KeyCode.ENTER){ login(stage); } });
         
@@ -50,18 +53,21 @@ public class LoginPage extends Application{
         stage.show();
     }
     
+    //this function launches the homepage with the given username, and closes itself
     public void login(Stage stage){
         stage.close();
         hp = new HomePage(nameField.getText());
         hp.start(new Stage());
     }
     
+    //when the program is closing, tell the homepage that the program is closing
     public void stop(){
         if(hp != null){
             hp.stop();
         }
     }
     
+    //starting point of the program
     public static void main(String[] args){
         Application.launch(args);
     }

@@ -4,6 +4,7 @@ package main.sorters;
 import main.Task;
 import java.util.Comparator;
 
+//this class sorts the tasks based up due date
 public class DateSorter implements Sorter{
 
     public Comparator<Task> getComparator() {
